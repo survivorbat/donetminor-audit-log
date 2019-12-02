@@ -1,0 +1,55 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj": {}
+  },
+  "projects": {
+    "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj",
+        "projectName": "MaartenH.Minor.Miffy.AuditLogging",
+        "projectPath": "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj",
+        "packagesPath": "/home/survivorbat/.nuget/packages/",
+        "outputPath": "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/home/survivorbat/.config/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}
