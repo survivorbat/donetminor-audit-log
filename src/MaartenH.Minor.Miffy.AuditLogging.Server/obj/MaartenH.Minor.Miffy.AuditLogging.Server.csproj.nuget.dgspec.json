@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj": {}
+    "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj": {}
   },
   "projects": {
-    "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj": {
+    "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj",
+        "projectUniqueName": "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj",
         "projectName": "MaartenH.Minor.Miffy.AuditLogging.Server",
-        "projectPath": "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj",
-        "packagesPath": "/home/survivorbat/.nuget/packages/",
-        "outputPath": "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/obj/",
+        "projectPath": "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj",
+        "packagesPath": "/home/maarten/.nuget/packages/",
+        "outputPath": "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/share/dotnet/sdk/NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/home/survivorbat/.config/NuGet/NuGet.Config"
+          "/home/maarten/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
@@ -38,6 +38,32 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "dependencies": {
+            "MaartenH.Minor.Miffy.Abstractions": {
+              "target": "Package",
+              "version": "[0.8.6, )"
+            },
+            "MaartenH.Minor.Miffy.Microservices": {
+              "target": "Package",
+              "version": "[0.8.6, )"
+            },
+            "MaartenH.Minor.Miffy.RabbitMQBus": {
+              "target": "Package",
+              "version": "[0.8.6, )"
+            },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.Extensions.Logging.Console": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

@@ -2,6 +2,21 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <PackageVersion>0.0.0</PackageVersion>
+        <Title>MaartenH.Minor.Miffy.AuditLogging</Title>
+        <Authors>Maarten van der Heijden</Authors>
+        <Description>The AuditLogging package that can be used to interact with a running AuditLogging service</Description>
+        <PackageProjectUrl>https://github.com/survivorbat/miffy-auditlogger</PackageProjectUrl>
+        <PackageLicenseUrl>https://www.gnu.org/licenses/old-licenses/gpl-2.0.html</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/survivorbat/miffy-auditlogger</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PackageTags>Miffy RabbitMQ Events Commands Bus</PackageTags>
     </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Minor.Miffy.MicroServices, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\..\..\..\..\.nuget\packages\maartenh.minor.miffy.microservices\0.8.6\lib\netstandard2.1\Minor.Miffy.MicroServices.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 
 </Project>

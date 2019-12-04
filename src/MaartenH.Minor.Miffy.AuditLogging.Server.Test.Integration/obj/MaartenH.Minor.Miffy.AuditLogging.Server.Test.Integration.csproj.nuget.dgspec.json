@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration.csproj": {}
+    "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration.csproj": {}
   },
   "projects": {
-    "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration.csproj": {
+    "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration.csproj",
+        "projectUniqueName": "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration.csproj",
         "projectName": "MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration",
-        "projectPath": "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration.csproj",
-        "packagesPath": "/home/survivorbat/.nuget/packages/",
-        "outputPath": "/home/survivorbat/dev/priv/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/obj/",
+        "projectPath": "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration.csproj",
+        "packagesPath": "/home/maarten/.nuget/packages/",
+        "outputPath": "/home/maarten/dev/miffy-auditlogger/src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/share/dotnet/sdk/NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/home/survivorbat/.config/NuGet/NuGet.Config"
+          "/home/maarten/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.0"
