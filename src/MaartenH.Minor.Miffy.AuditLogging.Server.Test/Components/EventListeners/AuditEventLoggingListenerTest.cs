@@ -1,9 +1,13 @@
+using System.Linq;
+using System.Threading;
 using Blueshift.EntityFrameworkCore.MongoDB.Storage;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
 using MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners;
+using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Repositories;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Test.Events;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,28 +16,47 @@ using Minor.Miffy.MicroServices.Events;
 using Minor.Miffy.MicroServices.Host;
 using Minor.Miffy.TestBus;
 using MongoDB.Driver;
+using Newtonsoft.Json;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Components.EventListeners
 {
     [TestClass]
     public class AuditEventLoggingListenerTest
     {
-        private IMongoClient _mongoClient;
-        private DbContextOptions<AuditLogContext> _options;
+        private static SqliteConnection _connection;
+        private static DbContextOptions<AuditLogContext> _options;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext tc)
         {
-            _mongoClient = new MongoClient();
+            _connection = new SqliteConnection("DataSource=:memory:");
+            _connection.Open();
+            _options = new DbContextOptionsBuilder<AuditLogContext>()
+                .UseSqlite(_connection).Options;
 
-            // TODO: Finish connection
-//            _options = new DbContextOptionsBuilder<AuditLogContext>()
-//                .UseMongoDb(_mongoClient)
-//                .Options;
+            using var context = new AuditLogContext(_options);
+            context.Database.EnsureCreated();
+        }
+
+        [ClassCleanup]
+        public static void ClassCleanup()
+        {
+            _connection.Close();
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            var context = new AuditLogContext(_options);
+            context.Set<AuditLogItem>().RemoveRange(context.Set<AuditLogItem>());
+            context.SaveChanges();
         }
 
         [TestMethod]
-        public void EventIsProperlyReceived()
+        [DataRow("Very Secret Message")]
+        [DataRow("A new user was added to the system!")]
+        [DataRow("Helelo World!")]
+        public void EventIsProperlyReceived(string data)
         {
             // Arrange
             AuditLogContext dbContext = new AuditLogContext(_options);
@@ -53,14 +76,23 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Components.EventListener
 
             host.Start();
 
-            DummyEvent evt = new DummyEvent("test.queue");
+            DummyEvent evt = new DummyEvent("test.queue") { Text = data };
+
             IEventPublisher eventPublisher = new EventPublisher(testBusContext);
 
             // Act
             eventPublisher.Publish(evt);
 
-            // Assert
+            Thread.Sleep(1500);
 
+            // Assert
+            AuditLogItem[] resultData = dbContext.AuditLogItems.ToArray();
+            Assert.AreEqual(1, resultData.Length);
+
+            string expectedData = JsonConvert.SerializeObject(evt);
+
+            var firstItem = resultData.First();
+            Assert.AreEqual(expectedData, firstItem.Data);
         }
     }
 }
