@@ -76,7 +76,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Components.EventListener
 
             host.Start();
 
-            DummyEvent evt = new DummyEvent("test.queue") { Text = data };
+            DummyEvent evt = new DummyEvent("test.queue") {Text = data };
 
             IEventPublisher eventPublisher = new EventPublisher(testBusContext);
 
@@ -93,6 +93,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Components.EventListener
 
             var firstItem = resultData.First();
             Assert.AreEqual(expectedData, firstItem.Data);
+            Assert.IsNotNull(firstItem.Id);
+            Assert.IsNotNull(firstItem.DateTime);
         }
     }
 }
