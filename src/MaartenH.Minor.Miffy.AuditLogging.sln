@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaartenH.Minor.Miffy.AuditL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaartenH.Minor.Miffy.AuditLogging", "MaartenH.Minor.Miffy.AuditLogging\MaartenH.Minor.Miffy.AuditLogging\MaartenH.Minor.Miffy.AuditLogging.csproj", "{005CDB12-77FD-4138-BCEA-BD63270C54D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaartenH.Minor.Miffy.AuditLogging.Test", "MaartenH.Minor.Miffy.AuditLogging.Test\MaartenH.Minor.Miffy.AuditLogging.Test.csproj", "{D7A6472D-D1D3-4AD9-9734-FBA628012083}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{005CDB12-77FD-4138-BCEA-BD63270C54D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{005CDB12-77FD-4138-BCEA-BD63270C54D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{005CDB12-77FD-4138-BCEA-BD63270C54D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A6472D-D1D3-4AD9-9734-FBA628012083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A6472D-D1D3-4AD9-9734-FBA628012083}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A6472D-D1D3-4AD9-9734-FBA628012083}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A6472D-D1D3-4AD9-9734-FBA628012083}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

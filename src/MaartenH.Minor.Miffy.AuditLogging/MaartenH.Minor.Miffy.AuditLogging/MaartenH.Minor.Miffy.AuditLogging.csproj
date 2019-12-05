@@ -19,4 +19,8 @@
       </Reference>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MaartenH.Minor.Miffy.Microservices" Version="0.8.6" />
+    </ItemGroup>
+
 </Project>

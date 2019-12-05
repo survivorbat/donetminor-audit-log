@@ -9,7 +9,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         public DateTime To { get; set; }
         public string ReplyQueue { get; set; }
 
-        protected ReplayEventsCommand() : base("auditlog.replay")
+        public ReplayEventsCommand() : base("auditlog.replay")
         {
         }
     }

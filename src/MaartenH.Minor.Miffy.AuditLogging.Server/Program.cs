@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Threading;
+using MaartenH.Minor.Miffy.AuditLogging.Server.Constants;
+using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy;
 using Minor.Miffy.MicroServices.Host;
@@ -29,7 +33,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
                 .WithBusContext(context)
                 .RegisterDependencies(services =>
                 {
-
+                    services.AddDbContext<AuditLogContext>(config =>
+                    {
+                        config.UseMongoDb(
+                            Environment.GetEnvironmentVariable(EnvNames.DatabaseConnectionString));
+                    });
                 })
                 .UseConventions()
                 .CreateHost();
