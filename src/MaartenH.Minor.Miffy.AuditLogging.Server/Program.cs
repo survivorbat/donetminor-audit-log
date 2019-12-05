@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Constants;
 using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
@@ -12,7 +13,11 @@ using RabbitMQ.Client;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server
 {
-    class Program
+    /// <summary>
+    /// This class is tested in an integration test
+    /// </summary>
+    [ExcludeFromCodeCoverage]
+    static class Program
     {
         static void Main(string[] args)
         {
