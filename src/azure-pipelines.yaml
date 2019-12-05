@@ -12,8 +12,8 @@ trigger:
 variables:
   buildConfiguration: 'Release'
   projects: |
-    MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj
-    MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
+    MaartenH.Minor.Miffy.AuditLogging
+    MaartenH.Minor.Miffy.AuditLogging.Server
   testProjects: |
     MaartenH.Minor.Miffy.AuditLogging.Test
     MaartenH.Minor.Miffy.AuditLogging.Server.Test
