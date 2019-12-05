@@ -1,7 +1,7 @@
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
-using MaartenH.Minor.Miffy.AuditLogging.Server.Test.Components.Events;
+using MaartenH.Minor.Miffy.AuditLogging.Server.Test.Events;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
