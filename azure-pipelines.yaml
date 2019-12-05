@@ -7,13 +7,13 @@ trigger:
     include:
       - src/MaartenH.Minor.Miffy.AuditLogging
       - src/MaartenH.Minor.Miffy.AuditLogging.Server
-      - src/azure-pipelines.yaml
+      - azure-pipelines.yaml
 
 variables:
   buildConfiguration: 'Release'
   projects: |
     src/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj
-   src/ MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
+    src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
   testProjects: |
     src/MaartenH.Minor.Miffy.AuditLogging.Test
     src/MaartenH.Minor.Miffy.AuditLogging.Server.Test
