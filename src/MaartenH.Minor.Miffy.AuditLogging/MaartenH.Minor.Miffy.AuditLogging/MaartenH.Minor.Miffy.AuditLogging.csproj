@@ -11,6 +11,7 @@
         <RepositoryUrl>https://github.com/survivorbat/miffy-auditlogger</RepositoryUrl>
         <RepositoryType>Git</RepositoryType>
         <PackageTags>Miffy RabbitMQ Events Commands Bus</PackageTags>
+        <ProjectGuid>D0C0734A-190E-430D-B79F-FB45C4FC56E2</ProjectGuid>
     </PropertyGroup>
 
     <ItemGroup>
