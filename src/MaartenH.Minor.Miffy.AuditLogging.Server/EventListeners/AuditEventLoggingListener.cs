@@ -1,4 +1,6 @@
+using System;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
+using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
 using Minor.Miffy.MicroServices.Events;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners
@@ -16,7 +18,13 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners
         [Topic("#")]
         public void Handle(string evt)
         {
+            AuditLogItem item = new AuditLogItem
+            {
+                Data = evt,
+                DateTime = DateTime.Now
+            };
 
+            _repository.Save(item);
         }
     }
 }
