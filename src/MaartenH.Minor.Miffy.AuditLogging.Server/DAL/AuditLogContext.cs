@@ -7,7 +7,6 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.DAL
     {
         public AuditLogContext(DbContextOptions<AuditLogContext> options) : base(options)
         {
-
         }
 
         public DbSet<AuditLogItem> AuditLogItems { get; set; }

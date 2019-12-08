@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading;
-using Blueshift.EntityFrameworkCore.MongoDB.Storage;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
 using MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners;
@@ -9,13 +8,11 @@ using MaartenH.Minor.Miffy.AuditLogging.Server.Repositories;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Test.Events;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Minor.Miffy.MicroServices.Events;
 using Minor.Miffy.MicroServices.Host;
 using Minor.Miffy.TestBus;
-using MongoDB.Driver;
 using Newtonsoft.Json;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Components.EventListeners

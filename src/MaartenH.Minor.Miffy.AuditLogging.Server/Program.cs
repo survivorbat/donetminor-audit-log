@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Constants;
 using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
+using MaartenH.Minor.Miffy.AuditLogging.Server.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -23,7 +25,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
         {
             using var loggerFactory = LoggerFactory.Create(configure =>
             {
-                configure.AddConsole().SetMinimumLevel(LogLevel.Debug);
+                configure.AddConsole().SetMinimumLevel(LogLevel.Information);
             });
 
             MiffyLoggerFactory.LoggerFactory = loggerFactory;
@@ -40,9 +42,10 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
                 {
                     services.AddDbContext<AuditLogContext>(config =>
                     {
-                        config.UseMongoDb(
-                            Environment.GetEnvironmentVariable(EnvNames.DatabaseConnectionString));
+                        config.UseMySql(Environment.GetEnvironmentVariable(EnvNames.DatabaseConnectionString));
+                        config.UseLoggerFactory(loggerFactory);
                     });
+                    services.AddTransient<IAuditLogItemRepository, AuditLogItemRepository>();
                 })
                 .UseConventions()
                 .CreateHost();
