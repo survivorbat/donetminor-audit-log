@@ -1,4 +1,3 @@
-using System;
 using Minor.Miffy.MicroServices.Commands;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Commands
@@ -18,7 +17,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// Timestamp from which to begin spewing out historical events
         /// </summary>
-        public long FromTimeStamp { get; set; }
+        public long? FromTimeStamp { get; set; }
 
         /// <summary>
         /// Timestamp at which to stop spewing out historical events
@@ -33,6 +32,6 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// Optinnal topic of all the events that you want to have returned
         /// </summary>
-        public string? Topic { get; set; }
+        public string Topic { get; set; }
     }
 }
