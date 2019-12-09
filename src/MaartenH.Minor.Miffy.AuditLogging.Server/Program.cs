@@ -25,7 +25,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
         {
             using var loggerFactory = LoggerFactory.Create(configure =>
             {
-                configure.AddConsole().SetMinimumLevel(LogLevel.Information);
+                configure.AddConsole().SetMinimumLevel(LogLevel.Trace);
             });
 
             MiffyLoggerFactory.LoggerFactory = loggerFactory;
@@ -46,6 +46,10 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
                         config.UseLoggerFactory(loggerFactory);
                     });
                     services.AddTransient<IAuditLogItemRepository, AuditLogItemRepository>();
+
+                    using var serviceScope = services.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>().CreateScope();
+                    var auditLogContext = serviceScope.ServiceProvider.GetService<AuditLogContext>();
+                    auditLogContext.Database.Migrate();
                 })
                 .UseConventions()
                 .CreateHost();

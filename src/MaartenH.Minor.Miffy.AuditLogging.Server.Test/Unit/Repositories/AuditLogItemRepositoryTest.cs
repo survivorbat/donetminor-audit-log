@@ -5,6 +5,7 @@ using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
@@ -49,7 +50,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
             // Arrange
             using (var context = new AuditLogContext(_options))
             {
-                var repository = new AuditLogItemRepository(context);
+                var repository = new AuditLogItemRepository(context, new NullLoggerFactory());
 
                 var item = new AuditLogItem {Data = data, DateTime = DateTime.Now};
 
