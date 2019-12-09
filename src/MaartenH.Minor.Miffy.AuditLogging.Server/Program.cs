@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 using Minor.Miffy;
 using Minor.Miffy.MicroServices.Host;
 using Minor.Miffy.RabbitMQBus;
-using RabbitMQ.Client;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server
 {

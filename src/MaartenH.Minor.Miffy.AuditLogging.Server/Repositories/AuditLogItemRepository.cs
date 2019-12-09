@@ -1,8 +1,6 @@
-using System;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
-using Microsoft.Extensions.Logging;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.Repositories
 {

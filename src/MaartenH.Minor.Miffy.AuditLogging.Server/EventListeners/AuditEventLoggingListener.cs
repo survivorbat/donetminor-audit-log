@@ -1,8 +1,6 @@
 using System;
-using System.Text;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
-using MaartenH.Minor.Miffy.AuditLogging.Server.Repositories;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy.MicroServices.Events;
 using Newtonsoft.Json;

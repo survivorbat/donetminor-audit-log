@@ -1,10 +1,12 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Constants;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.DAL
 {
+    [ExcludeFromCodeCoverage]
     public class AuditLogContext : DbContext
     {
 		public AuditLogContext()
