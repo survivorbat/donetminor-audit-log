@@ -1,10 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using ExampleService.Events;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy;
-using Minor.Miffy.MicroServices.Commands;
 using Minor.Miffy.MicroServices.Events;
 using Minor.Miffy.RabbitMQBus;
 

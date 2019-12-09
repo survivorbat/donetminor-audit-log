@@ -86,6 +86,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
         [DataRow(10, 20, 2)]
         [DataRow(5, 12, 2)]
         [DataRow(10, 25, 3)]
+        [DataRow(5, 40, 4)]
         public void RetrievingItemsFromSpecificTimePeriodWorks(long fromTimeStamp, long toTimeStamp, int expectedAmount)
         {
             // Arrange
@@ -94,8 +95,14 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
             using var context = new AuditLogContext(_options);
             var repository = new AuditLogItemRepository(context);
 
+            var criteria = new AuditLogItemCriteria
+            {
+                FromTimeStamp = fromTimeStamp,
+                ToTimeStamp = toTimeStamp
+            };
+
             // Act
-            AuditLogItem[] results = repository.FindByTimeStamps(fromTimeStamp, toTimeStamp).ToArray();
+            AuditLogItem[] results = repository.FindByCriteria(criteria).ToArray();
 
             // Assert
             Assert.AreEqual(expectedAmount, results.Length);

@@ -31,12 +31,15 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Repositories
         }
 
         /// <summary>
-        /// Retrieve audit log items between two timestamps
+        /// Retrieve audit log items based on criteria
         /// </summary>
-        public IEnumerable<AuditLogItem> FindByTimeStamps(long fromTimeStamp, long toTimeStamp)
+        public IEnumerable<AuditLogItem> FindByCriteria(AuditLogItemCriteria criteria)
         {
-            return _auditLogContext.AuditLogItems.Where(e =>
-                e.TimeStamp >= fromTimeStamp && e.TimeStamp <= toTimeStamp);
+            return _auditLogContext.AuditLogItems
+                .Where(e => criteria.ToTimeStamp >= e.TimeStamp)
+                .Where(e => criteria.FromTimeStamp == null || criteria.FromTimeStamp <= e.TimeStamp)
+                .Where(e => criteria.Topic == null || criteria.Topic == e.Topic)
+                .Where(e => criteria.EventType == null || criteria.EventType == e.EventType);
         }
     }
 }
