@@ -14,17 +14,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Repositories
         private readonly AuditLogContext _auditLogContext;
 
         /// <summary>
-        /// Logger
-        /// </summary>
-        private readonly ILogger<AuditLogItemRepository> _logger;
-
-        /// <summary>
         /// Inject needed dependencies
         /// </summary>
-        public AuditLogItemRepository(AuditLogContext context, ILoggerFactory loggerFactory)
+        public AuditLogItemRepository(AuditLogContext context)
         {
             _auditLogContext = context;
-            _logger = loggerFactory.CreateLogger<AuditLogItemRepository>();
         }
 
         /// <summary>
@@ -32,15 +26,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Repositories
         /// </summary>
         public void Save(AuditLogItem item)
         {
-            _logger.LogDebug($"Saving auditlogitem with ID {item.Id}, " +
-                                   $"Topic {item.Topic}, timestamp {item.TimeStamp} " +
-                                   $"and data {item.StringData}");
-
             _auditLogContext.AuditLogItems.Add(item);
-            int rowChanges = _auditLogContext.SaveChanges();
-
-            _logger.LogInformation($"{rowChanges} changes made in database after saving item" +
-                                   item.Id);
+            _auditLogContext.SaveChanges();
         }
     }
 }

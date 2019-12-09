@@ -16,7 +16,7 @@ namespace ExampleService
         {
             using var loggerFactory = LoggerFactory.Create(configure =>
             {
-                configure.AddConsole().SetMinimumLevel(LogLevel.Information);
+                configure.AddConsole().SetMinimumLevel(LogLevel.Error);
             });
 
             MiffyLoggerFactory.LoggerFactory = loggerFactory;
@@ -31,11 +31,10 @@ namespace ExampleService
             while (true)
             {
                 byte[] bytes = new byte[20];
-                new Random().NextBytes(bytes);
 
                 DummyEvent exampleEvent = new DummyEvent
                 {
-                    Data = Encoding.Unicode.GetString(bytes)
+                    RandomData = "A random event was fired."
                 };
 
                 eventPublisher.Publish(exampleEvent);

@@ -2,6 +2,7 @@ using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Test.Events;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.EventListeners
         {
             // Arrange
             var repoMock = new Mock<IAuditLogItemRepository>();
-            var listener = new AuditEventLoggingListener(repoMock.Object);
+            var listener = new AuditEventLoggingListener(repoMock.Object, new NullLoggerFactory());
             var dummyEvent = new DummyEvent("test.event");
 
             string jsonEvent = JsonConvert.SerializeObject(dummyEvent);
@@ -29,25 +30,33 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.EventListeners
         }
 
         [TestMethod]
-        [DataRow("SimpleData")]
-        [DataRow("{ 'data': 'Hey!' }")]
-        [DataRow("{ 'data': ['Hello', 'World'] }")]
-        public void HandlesSavesDeliveredMessageWithProperData(string data)
+        [DataRow("TestId",  "test.topic", 1020, "SimpleData")]
+        [DataRow("123456",  "test.topic", 203592, "Example Data")]
+        public void HandlesSavesDeliveredMessageWithProperData(string id, string topic, long timestamp, string text)
         {
             // Arrange
             var repoMock = new Mock<IAuditLogItemRepository>();
-            var listener = new AuditEventLoggingListener(repoMock.Object);
+            var listener = new AuditEventLoggingListener(repoMock.Object, new NullLoggerFactory());
 
             AuditLogItem resultItem = null;
             repoMock.Setup(e => e.Save(It.IsAny<AuditLogItem>()))
                 .Callback<AuditLogItem>(item => resultItem = item);
 
+            var inputObject = new
+            {
+                Id = id,
+                TimeStamp = timestamp,
+                Data = text,
+                Topic = topic
+            };
+
+            string input = JsonConvert.SerializeObject(inputObject);
+
             // Act
-            listener.Handle(data);
+            listener.Handle(input);
 
             // Assert
-            Assert.IsNotNull(resultItem.DateTime);
-            Assert.AreEqual(data, resultItem.Data);
+            Assert.AreEqual(input, resultItem.Data);
         }
     }
 }

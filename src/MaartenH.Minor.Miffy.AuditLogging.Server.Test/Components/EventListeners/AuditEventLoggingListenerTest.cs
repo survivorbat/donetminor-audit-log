@@ -52,7 +52,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Components.EventListener
         [TestMethod]
         [DataRow("Very Secret Message")]
         [DataRow("A new user was added to the system!")]
-        [DataRow("Helelo World!")]
+        [DataRow("Hello World!")]
         public void EventIsProperlyReceived(string data)
         {
             // Arrange
@@ -90,8 +90,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Components.EventListener
 
             var firstItem = resultData.First();
             Assert.AreEqual(expectedData, firstItem.Data);
-            Assert.IsNotNull(firstItem.Id);
-            Assert.IsNotNull(firstItem.DateTime);
+            Assert.AreEqual(evt.Id.ToString(), firstItem.Id);
+            Assert.AreEqual(evt.Timestamp, firstItem.TimeStamp);
         }
     }
 }

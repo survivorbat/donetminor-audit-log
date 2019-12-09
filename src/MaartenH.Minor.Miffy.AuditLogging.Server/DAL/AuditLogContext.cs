@@ -24,6 +24,6 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.DAL
             }
         }
 
-        internal DbSet<AuditLogItem> AuditLogItems { get; set; }
+        public DbSet<AuditLogItem> AuditLogItems { get; set; }
     }
 }

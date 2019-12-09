@@ -25,7 +25,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
         {
             using var loggerFactory = LoggerFactory.Create(configure =>
             {
-                configure.AddConsole().SetMinimumLevel(LogLevel.Trace);
+                configure.AddConsole().SetMinimumLevel(LogLevel.Error);
             });
 
             MiffyLoggerFactory.LoggerFactory = loggerFactory;

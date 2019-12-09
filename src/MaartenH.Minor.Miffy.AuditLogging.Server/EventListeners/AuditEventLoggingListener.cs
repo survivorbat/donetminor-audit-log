@@ -30,12 +30,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners
             try
             {
                 AuditLogItem item = JsonConvert.DeserializeObject<AuditLogItem>(evt);
-
-                _logger.LogInformation($"Converting data from event with id {item.Id}, " +
-                                       $"timestamp {item.TimeStamp}, topic {item.Topic} and " +
-                                       $"raw data with length of {item.Data.Length}");
-
-                item.StringData = Encoding.Unicode.GetString(item.Data);
+                item.Data = evt;
 
                 _repository.Save(item);
             }

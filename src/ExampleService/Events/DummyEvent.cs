@@ -8,6 +8,6 @@ namespace ExampleService.Events
         {
         }
 
-        public string Data { get; set; }
+        public string RandomData { get; set; }
     }
 }

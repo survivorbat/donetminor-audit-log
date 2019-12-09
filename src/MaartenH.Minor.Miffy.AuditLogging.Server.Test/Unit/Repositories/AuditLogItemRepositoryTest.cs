@@ -43,16 +43,21 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
         }
 
         [TestMethod]
-        [DataRow("TestData")]
-        [DataRow("{ 'data': 'test' }")]
-        public void SavingAnItemWorks(string data)
+        [DataRow("TestData", "TeestTopic")]
+        [DataRow("{ 'data': 'test' }", "Topic.Topic")]
+        public void SavingAnItemWorks(string data, string topic)
         {
             // Arrange
             using (var context = new AuditLogContext(_options))
             {
-                var repository = new AuditLogItemRepository(context, new NullLoggerFactory());
+                var repository = new AuditLogItemRepository(context);
 
-                var item = new AuditLogItem {Data = data, DateTime = DateTime.Now};
+                var item = new AuditLogItem
+                {
+                    Data = data,
+                    Topic = topic,
+                    Id = Guid.NewGuid().ToString()
+                };
 
                 // Act
                 repository.Save(item);
@@ -67,6 +72,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
 
             var firstItem = resultData.First();
             Assert.AreEqual(data, firstItem.Data);
+            Assert.AreEqual(topic, firstItem.Topic);
         }
     }
 }
