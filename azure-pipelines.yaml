@@ -38,6 +38,7 @@ stages:
               scannerMode: 'MSBuild'
               projectKey: $(projectKey)
               projectName: $(projectName)
+              extraProperties: sonar.exclusions=**\*.js,**\bootstrap*.css,**\DataTables\**\*.css,**\roslyn\*,**\Global.asax.cs,**\Migrations\**,**\DAL\LeaseBedrijfDataConfiguration.cs
 
           - task: DotNetCoreCLI@2
             displayName: 'dotnet build'
