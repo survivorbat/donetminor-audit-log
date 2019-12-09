@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
@@ -26,6 +28,15 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Repositories
         {
             _auditLogContext.AuditLogItems.Add(item);
             _auditLogContext.SaveChanges();
+        }
+
+        /// <summary>
+        /// Retrieve audit log items between two timestamps
+        /// </summary>
+        public IEnumerable<AuditLogItem> FindByTimeStamps(long fromTimeStamp, long toTimeStamp)
+        {
+            return _auditLogContext.AuditLogItems.Where(e =>
+                e.TimeStamp >= fromTimeStamp && e.TimeStamp <= toTimeStamp);
         }
     }
 }

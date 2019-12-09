@@ -74,5 +74,41 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
             Assert.AreEqual(data, firstItem.Data);
             Assert.AreEqual(topic, firstItem.Topic);
         }
+
+        private readonly AuditLogItem[] _dummyData = {
+            new AuditLogItem {TimeStamp = 9, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid().ToString()},
+            new AuditLogItem {TimeStamp = 12, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid().ToString()},
+            new AuditLogItem {TimeStamp = 15, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid().ToString()},
+            new AuditLogItem {TimeStamp = 23, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid().ToString()},
+        };
+
+        [TestMethod]
+        [DataRow(10, 20, 2)]
+        [DataRow(5, 12, 2)]
+        [DataRow(10, 25, 3)]
+        public void RetrievingItemsFromSpecificTimePeriodWorks(long fromTimeStamp, long toTimeStamp, int expectedAmount)
+        {
+            // Arrange
+            InjectData(_dummyData);
+
+            using var context = new AuditLogContext(_options);
+            var repository = new AuditLogItemRepository(context);
+
+            // Act
+            AuditLogItem[] results = repository.FindByTimeStamps(fromTimeStamp, toTimeStamp).ToArray();
+
+            // Assert
+            Assert.AreEqual(expectedAmount, results.Length);
+        }
+
+        /// <summary>
+        /// Inject data directly into the context
+        /// </summary>
+        private void InjectData(params AuditLogItem[] items)
+        {
+            using var context = new AuditLogContext(_options);
+            context.AuditLogItems.AddRange(items);
+            context.SaveChanges();
+        }
     }
 }
