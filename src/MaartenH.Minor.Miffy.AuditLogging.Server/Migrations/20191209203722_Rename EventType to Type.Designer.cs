@@ -2,14 +2,16 @@
 using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.Migrations
 {
     [DbContext(typeof(AuditLogContext))]
-    partial class AuditLogContextModelSnapshot : ModelSnapshot
+    [Migration("20191209203722_Rename EventType to Type")]
+    partial class RenameEventTypetoType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
