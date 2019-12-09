@@ -1,3 +1,4 @@
+using System;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
@@ -57,6 +58,22 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.EventListeners
 
             // Assert
             Assert.AreEqual(input, resultItem.Data);
+        }
+
+        [TestMethod]
+        [DataRow("TestId")]
+        [DataRow("{\"\"}")]
+        public void HandlesSavesThrowsExceptionOnInvalidObject(string data)
+        {
+            // Arrange
+            var repoMock = new Mock<IAuditLogItemRepository>();
+            var listener = new AuditEventLoggingListener(repoMock.Object, new NullLoggerFactory());
+
+            // Act
+            void Act() => listener.Handle(data);
+
+            // Assert
+            Assert.ThrowsException<JsonReaderException>(Act);
         }
     }
 }

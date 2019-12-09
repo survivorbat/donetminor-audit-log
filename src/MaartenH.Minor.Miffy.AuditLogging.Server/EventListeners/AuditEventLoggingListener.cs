@@ -32,10 +32,12 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners
 
                 _repository.Save(item);
             }
-            catch (FormatException exception)
+            catch (JsonReaderException exception)
             {
-                _logger.LogCritical($"FormatException occured while handling incoming event! {exception.Message}. " +
+                _logger.LogCritical($"Json Exception occured while handling incoming event! {exception.Message}. " +
                                     $"This means that this item IS NOT saved! Item {evt}");
+
+                throw;
             }
         }
     }
