@@ -28,7 +28,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// The type of events that are desired
         /// </summary>
-        public string EventType { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Optinnal topic of all the events that you want to have returned

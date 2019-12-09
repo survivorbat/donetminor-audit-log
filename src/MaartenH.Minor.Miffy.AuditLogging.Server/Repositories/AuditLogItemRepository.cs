@@ -39,7 +39,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Repositories
                 .Where(e => criteria.ToTimeStamp >= e.TimeStamp)
                 .Where(e => criteria.FromTimeStamp == null || criteria.FromTimeStamp <= e.TimeStamp)
                 .Where(e => criteria.Topic == null || criteria.Topic == e.Topic)
-                .Where(e => criteria.EventType == null || criteria.EventType == e.EventType);
+                .Where(e => criteria.EventType == null || criteria.EventType == e.Type);
         }
     }
 }
