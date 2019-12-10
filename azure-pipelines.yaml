@@ -17,6 +17,8 @@ variables:
   projects: |
     src/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj
     src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
+  dockerProjects: |
+    src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
   testProjects: |
     src/MaartenH.Minor.Miffy.AuditLogging.Test
     src/MaartenH.Minor.Miffy.AuditLogging.Server.Test
@@ -79,7 +81,7 @@ stages:
           # Not the cleanest way, but it works and it means I don't need a running server
           - bash: |
               docker run -d -p 5672:5672 --name rabbitmq rabbitmq:3-alpine
-              docker run -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root mysql:5.7.28
+              docker run -d -p 3312:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root mysql:5.7.28
             displayName: 'Start test containers'
 
           - task: DotNetCoreCLI@2
@@ -89,7 +91,7 @@ stages:
               projects: $(integrationTestProjects)
               arguments: '--configuration $(BuildConfiguration)'
             env:
-              DB_CONNECTION_STRING: "DataSource=localhost;Database=TestDb;Username=root;Password=root;"
+              DB_CONNECTION_STRING: "DataSource=localhost;Database=TestDb;Username=root;Password=root;Port=3312;"
               BROKER_CONNECTION_STRING: "amqp://guest:guest@localhost"
               BROKER_EXCHANGE_NAME: "TestExchange"
 #
@@ -128,7 +130,7 @@ stages:
             inputs:
               command: publish
               publishWebProjects: false
-              projects: $(projectPath)/*.csproj
+              projects: $(dockerProjects)
               arguments: '--configuration Release --self-contained -f "netcoreapp3.0" -r "linux-x64" --output "$(projectPath)/obj/Docker/publish"'
               zipAfterPublish: false
               modifyOutputPath: false
