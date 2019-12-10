@@ -1,0 +1,48 @@
+version: '3.5'
+
+networks:
+  broker: ~
+  database: ~
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-alpine
+    ports:
+      - 5672:5672
+    restart: unless-stopped
+    networks:
+      - broker
+
+  mysql:
+    image: mysql:5.7.28
+    networks:
+      - database
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: unless-stopped
+
+  auditlog:
+    build:
+      context: ./MaartenH.Minor.Miffy.AuditLogging.Server
+      dockerfile: Dockerfile
+    networks:
+      - broker
+      - database
+    environment:
+      DB_CONNECTION_STRING: "DataSource=mysql;Username=root;Password=root;Database=testdb"
+      BROKER_CONNECTION_STRING: "amqp://guest:guest@rabbitmq"
+      BROKER_EXCHANGE_NAME: "TestExchange"
+    restart: unless-stopped
+
+  exampleservice:
+    build:
+      context: ./ExampleService
+      dockerfile: Dockerfile
+    networks:
+      - broker
+    environment:
+      BROKER_CONNECTION_STRING: "amqp://guest:guest@rabbitmq"
+      BROKER_EXCHANGE_NAME: "TestExchange"
+    restart: unless-stopped

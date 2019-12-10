@@ -1,5 +1,4 @@
 ﻿using System.Threading;
-using ExampleService.Events;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy;
 using Minor.Miffy.MicroServices.Events;
@@ -27,16 +26,9 @@ namespace ExampleService
 
             while (true)
             {
-                byte[] bytes = new byte[20];
-
-                DummyEvent exampleEvent = new DummyEvent
-                {
-                    RandomData = "A random event was fired."
-                };
-
-                eventPublisher.Publish(exampleEvent);
-
-                Thread.Sleep(2000);
+                DomainEvent domainEvent = SeedData.GenerateRandomEvent();
+                eventPublisher.Publish(domainEvent);
+                Thread.Sleep(4000);
             }
         }
     }
