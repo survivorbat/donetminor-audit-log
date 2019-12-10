@@ -6,7 +6,6 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Extensions
     {
         public static void WithAuditLogReplyQueues(this MicroserviceHostBuilder builder)
         {
-
         }
     }
 }
