@@ -115,23 +115,23 @@ stages:
               packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
               nuGetFeedType: 'external'
               publishFeedCredentials: 'NuGet feed'
-      - job: ReleaseDocker
-        displayName: Release Docker Image
-        pool:
-          vmImage: 'ubuntu-latest'
-        steps:
-          - task: DotNetCoreCLI@2
-            displayName: 'dotnet pack'
-            inputs:
-              command: 'pack'
-              packagesToPack: '**/*.csproj'
-              patchVersion: $(Build.BuildId)
-
-          - task: NuGetCommand@2
-            displayName: 'nuget.org nuget push'
-            inputs:
-              allowPackageConflicts: true
-              command: 'push'
-              packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-              nuGetFeedType: 'external'
-              publishFeedCredentials: 'NuGet feed'
+#      - job: ReleaseDocker
+#        displayName: Release Docker Image
+#        pool:
+#          vmImage: 'ubuntu-latest'
+#        steps:
+#          - task: DotNetCoreCLI@2
+#            displayName: 'dotnet pack'
+#            inputs:
+#              command: 'pack'
+#              packagesToPack: '**/*.csproj'
+#              patchVersion: $(Build.BuildId)
+#
+#          - task: NuGetCommand@2
+#            displayName: 'nuget.org nuget push'
+#            inputs:
+#              allowPackageConflicts: true
+#              command: 'push'
+#              packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+#              nuGetFeedType: 'external'
+#              publishFeedCredentials: 'NuGet feed'
