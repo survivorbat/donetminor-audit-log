@@ -10,6 +10,9 @@ trigger:
       - azure-pipelines.yaml
 
 variables:
+  imageRepository: 'maartenh-miffy-auditlogger'
+  containerRegistry: 'DockerHub'
+  tag: '$(Build.BuildId)'
   buildConfiguration: 'Release'
   projects: |
     src/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj
@@ -115,23 +118,26 @@ stages:
               packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
               nuGetFeedType: 'external'
               publishFeedCredentials: 'NuGet feed'
-#      - job: ReleaseDocker
-#        displayName: Release Docker Image
-#        pool:
-#          vmImage: 'ubuntu-latest'
-#        steps:
-#          - task: DotNetCoreCLI@2
-#            displayName: 'dotnet pack'
-#            inputs:
-#              command: 'pack'
-#              packagesToPack: '**/*.csproj'
-#              patchVersion: $(Build.BuildId)
-#
-#          - task: NuGetCommand@2
-#            displayName: 'nuget.org nuget push'
-#            inputs:
-#              allowPackageConflicts: true
-#              command: 'push'
-#              packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-#              nuGetFeedType: 'external'
-#              publishFeedCredentials: 'NuGet feed'
+      - job: ReleaseDocker
+        displayName: Release Docker Image
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet publish'
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: $(projectPath)/*.csproj
+              arguments: '--configuration Release --self-contained -f "netcoreapp3.0" -r "linux-x64" --output "$(projectPath)/obj/Docker/publish"'
+              zipAfterPublish: false
+              modifyOutputPath: false
+
+          - task: Docker@2
+            inputs:
+              containerRegistry: '$(dockerRegistry)'
+              repository: '$(imageRepository)'
+              command: 'buildAndPush'
+              Dockerfile: '$(projectPath)/Dockerfile'
+              tags: $(tag)
+
