@@ -1,15 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ExampleService.Events;
-using ExampleService.Model;
 using Minor.Miffy.MicroServices.Events;
 
 namespace ExampleService
 {
-    internal static partial class SeedData
+    /// <summary>
+    /// The more technical and logic part of the SeedData
+    ///
+    /// This class reflects the Calling Assembly and takes all the DomainEvents
+    /// it can find. Then it'll evaluate if there is any seeddata defined for those
+    /// classes and then packs them together and sends them back.
+    ///
+    /// PLEASE NOTE THAT THIS CLASS HAS NOTHING TO DO WITH THE AUDITLOGGER AND
+    /// IS JUST AN OVER-ENGINEERED EXAMPLE
+    /// </summary>
+    internal static partial class ExampleData
     {
         /// <summary>
         /// A random object to enable us to choose random events
@@ -34,7 +41,7 @@ namespace ExampleService
         /// <summary>
         /// Seed data type
         /// </summary>
-        private static readonly Type SeedDataType = typeof(SeedData);
+        private static readonly Type SeedDataType = typeof(ExampleData);
 
         /// <summary>
         /// A domainevent type that can be generated
@@ -49,7 +56,7 @@ namespace ExampleService
         /// Select all types from the current assembly and add them to the list
         /// of domain types
         /// </summary>
-        static SeedData()
+        static ExampleData()
         {
             DummyDataProperties = SeedDataType.GetFields(BindingFlags.Static | BindingFlags.Public)
                 .Select(e => e.Name)
@@ -107,10 +114,10 @@ namespace ExampleService
 
             foreach (PropertyInfo propertyInfo in type.PropertyInfos)
             {
-                IEnumerable<object> dummyDataProperty = SeedDataType.GetField($"{propertyInfo.Name}s")
-                    ?.GetValue(null) as IEnumerable<object>;
+                var dummyDataProperty = SeedDataType.GetField($"{propertyInfo.Name}s")
+                    ?.GetValue(null) as object[];
 
-                propertyInfo.SetValue(instance, dummyDataProperty.First());
+                propertyInfo.SetValue(instance, dummyDataProperty?[Random.Next(dummyDataProperty.Length)]);
             }
 
             return instance as DomainEvent;

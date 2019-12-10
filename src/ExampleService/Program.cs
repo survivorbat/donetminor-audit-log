@@ -26,7 +26,7 @@ namespace ExampleService
 
             while (true)
             {
-                DomainEvent domainEvent = SeedData.GenerateRandomEvent();
+                DomainEvent domainEvent = ExampleData.GenerateRandomEvent();
                 eventPublisher.Publish(domainEvent);
                 Thread.Sleep(4000);
             }
