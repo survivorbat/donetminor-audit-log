@@ -11,7 +11,7 @@ trigger:
 
 variables:
   imageRepository: 'maartenh-miffy-auditlogger'
-  containerRegistry: 'DockerHub'
+  dockerRegistry: 'DockerHub'
   tag: '$(Build.BuildId)'
   buildConfiguration: 'Release'
   projects: |
