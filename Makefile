@@ -12,20 +12,20 @@ help: ## Show the list of commands
 
 build: ## Build the docker containers
 	dotnet publish \
-		src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj \
+		MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj \
 		-c Release \
-		-o src/MaartenH.Minor.Miffy.AuditLogging.Server/obj/Docker/publish
+		-o MaartenH.Minor.Miffy.AuditLogging.Server/obj/Docker/publish
 
 	dotnet publish \
-		src/ExampleService/ExampleService.csproj \
+		ExampleService/ExampleService.csproj \
 		-c Release \
-		-o src/ExampleService/obj/Docker/publish
+		-o ExampleService/obj/Docker/publish
 
-	docker-compose -f src/docker-compose.yaml -p auditlogger build
+	docker-compose -f docker-compose.yaml -p auditlogger build
 
 up: ## Start the containers in docker-compose
 	make build
-	docker-compose -f src/docker-compose.yaml -p auditlogger up -d
+	docker-compose -f docker-compose.yaml -p auditlogger up -d
 
 down: ## Stop the containers
-	docker-compose -f src/docker-compose.yaml -p auditlogger down
+	docker-compose -f docker-compose.yaml -p auditlogger down
