@@ -16,7 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MaartenH.Minor.Miffy.AuditLogging\MaartenH.Minor.Miffy.AuditLogging\MaartenH.Minor.Miffy.AuditLogging.csproj" />
+      <ProjectReference Include="..\MaartenH.Minor.Miffy.AuditLogging\MaartenH.Minor.Miffy.AuditLogging.csproj" />
     </ItemGroup>
-
 </Project>
