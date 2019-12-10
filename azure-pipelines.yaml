@@ -128,7 +128,7 @@ stages:
             inputs:
               command: publish
               publishWebProjects: false
-              projects: $(projectPath)/*.csproj
+              projects: $(projects)
               arguments: '--configuration Release --self-contained -f "netcoreapp3.0" -r "linux-x64" --output "$(projectPath)/obj/Docker/publish"'
               zipAfterPublish: false
               modifyOutputPath: false
