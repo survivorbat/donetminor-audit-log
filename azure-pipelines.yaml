@@ -64,50 +64,74 @@ stages:
             inputs:
               SonarQube: 'SonarQube Service Connection'
 
-# TODO: Re-enable later
-#  - stage: Integration
-#    displayName: Integration Tests
-#    dependsOn: Build
-#    jobs:
-#      - job: Integration
-#        displayName: Integration Tests
-#        pool:
-#          vmImage: 'ubuntu-latest'
-#        steps:
-#          # Not the cleanest way, but it works and it means I don't need a running server
-#          - bash: |
-#              docker run -d -p 5672:5672 --name rabbitmq rabbitmq:3-alpine
-#            displayName: 'docker run rabbitmq'
+  - stage: Integration
+    displayName: Integration Tests
+    dependsOn: Build
+    jobs:
+      - job: Integration
+        displayName: Integration Tests
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          # Not the cleanest way, but it works and it means I don't need a running server
+          - bash: |
+              docker run -d -p 5672:5672 --name rabbitmq rabbitmq:3-alpine
+              docker run -d -p 3306:3306 --name mysql -e MYSQL_ROOT_PASSWORD=root mysql:5.7.28
+            displayName: 'Start test containers'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet test'
+            inputs:
+              command: test
+              projects: $(integrationTestProjects)
+              arguments: '--configuration $(BuildConfiguration)'
+            env:
+              DB_CONNECTION_STRING: "DataSource=localhost;Database=TestDb;Username=root;Password=root;"
+              BROKER_CONNECTION_STRING: "amqp://guest:guest@localhost"
+              BROKER_EXCHANGE_NAME: "TestExchange"
 #
-#          - task: DotNetCoreCLI@2
-#            displayName: 'dotnet test'
-#            inputs:
-#              command: test
-#              projects: $(integrationTestProjects)
-#              arguments: '--configuration $(BuildConfiguration)'
-#
-#  - stage: Release
-#    displayName: Release
-#    dependsOn: Integration
-#    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-#    jobs:
-#      - job: Release
-#        displayName: Release
-#        pool:
-#          vmImage: 'ubuntu-latest'
-#        steps:
-#          - task: DotNetCoreCLI@2
-#            displayName: 'dotnet pack'
-#            inputs:
-#              command: 'pack'
-#              packagesToPack: '**/*.csproj'
-#              patchVersion: $(Build.BuildId)
-#
-#          - task: NuGetCommand@2
-#            displayName: 'nuget.org nuget push'
-#            inputs:
-#              allowPackageConflicts: true
-#              command: 'push'
-#              packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
-#              nuGetFeedType: 'external'
-#              publishFeedCredentials: 'NuGet feed'
+  - stage: Release
+    displayName: Release
+    dependsOn: Integration
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    jobs:
+      - job: ReleaseNuGet
+        displayName: Release NuGet
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet pack'
+            inputs:
+              command: 'pack'
+              packagesToPack: '**/*.csproj'
+              patchVersion: $(Build.BuildId)
+
+          - task: NuGetCommand@2
+            displayName: 'nuget.org nuget push'
+            inputs:
+              allowPackageConflicts: true
+              command: 'push'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+              nuGetFeedType: 'external'
+              publishFeedCredentials: 'NuGet feed'
+      - job: ReleaseDocker
+        displayName: Release Docker Image
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: 'dotnet pack'
+            inputs:
+              command: 'pack'
+              packagesToPack: '**/*.csproj'
+              patchVersion: $(Build.BuildId)
+
+          - task: NuGetCommand@2
+            displayName: 'nuget.org nuget push'
+            inputs:
+              allowPackageConflicts: true
+              command: 'push'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+              nuGetFeedType: 'external'
+              publishFeedCredentials: 'NuGet feed'

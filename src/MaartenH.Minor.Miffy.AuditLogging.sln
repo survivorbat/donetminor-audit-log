@@ -6,11 +6,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaartenH.Minor.Miffy.AuditL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration", "MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration\MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration.csproj", "{B29A5DA3-A770-4693-B69D-45BA36F2479A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaartenH.Minor.Miffy.AuditLogging", "MaartenH.Minor.Miffy.AuditLogging\MaartenH.Minor.Miffy.AuditLogging\MaartenH.Minor.Miffy.AuditLogging.csproj", "{005CDB12-77FD-4138-BCEA-BD63270C54D9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaartenH.Minor.Miffy.AuditLogging.Test", "MaartenH.Minor.Miffy.AuditLogging.Test\MaartenH.Minor.Miffy.AuditLogging.Test.csproj", "{D7A6472D-D1D3-4AD9-9734-FBA628012083}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleService", "ExampleService\ExampleService.csproj", "{4DCF95FF-A744-44FD-BB91-13BC679D2235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaartenH.Minor.Miffy.AuditLogging", "MaartenH.Minor.Miffy.AuditLogging\MaartenH.Minor.Miffy.AuditLogging.csproj", "{D0C0734A-190E-430D-B79F-FB45C4FC56E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +30,6 @@ Global
 		{B29A5DA3-A770-4693-B69D-45BA36F2479A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B29A5DA3-A770-4693-B69D-45BA36F2479A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B29A5DA3-A770-4693-B69D-45BA36F2479A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{005CDB12-77FD-4138-BCEA-BD63270C54D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{005CDB12-77FD-4138-BCEA-BD63270C54D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{005CDB12-77FD-4138-BCEA-BD63270C54D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{005CDB12-77FD-4138-BCEA-BD63270C54D9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D7A6472D-D1D3-4AD9-9734-FBA628012083}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D7A6472D-D1D3-4AD9-9734-FBA628012083}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7A6472D-D1D3-4AD9-9734-FBA628012083}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,5 +38,9 @@ Global
 		{4DCF95FF-A744-44FD-BB91-13BC679D2235}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DCF95FF-A744-44FD-BB91-13BC679D2235}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DCF95FF-A744-44FD-BB91-13BC679D2235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0C0734A-190E-430D-B79F-FB45C4FC56E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0C0734A-190E-430D-B79F-FB45C4FC56E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0C0734A-190E-430D-B79F-FB45C4FC56E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0C0734A-190E-430D-B79F-FB45C4FC56E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

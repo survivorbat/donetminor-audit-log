@@ -4,6 +4,7 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <ProjectGuid>D0C0734A-190E-430D-B79F-FB45C4FC56E1</ProjectGuid>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
