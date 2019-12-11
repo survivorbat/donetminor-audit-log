@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Minor.Miffy.MicroServices.Commands;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Commands
@@ -5,6 +6,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
     /// <summary>
     /// Command that triggers the auditlogger to spew out historical events
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public class ReplayEventsCommand : DomainCommand
     {
         /// <summary>
@@ -13,6 +15,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         public ReplayEventsCommand() : base("auditlog.replay")
         {
         }
+
+        /// <summary>
+        /// The name of the exchange to send the replay events to
+        /// </summary>
+        public string ExchangeName { get; set; }
 
         /// <summary>
         /// Timestamp from which to begin spewing out historical events
