@@ -10,7 +10,7 @@ trigger:
       - azure-pipelines.yaml
 
 variables:
-  imageRepository: 'maartenh-miffy-auditlogger'
+  imageRepository: 'survivorbat/maartenh-miffy-auditlogger'
   dockerRegistry: 'DockerHub'
   tag: '$(Build.BuildId)'
   buildConfiguration: 'Release'
