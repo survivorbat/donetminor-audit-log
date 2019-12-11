@@ -1,8 +1,8 @@
-# Miffy AuditLogging
+# Miffy RabbitMQ AuditLogging
 
 ![GitHub](https://img.shields.io/github/license/survivorbat/miffy-auditlogger)
 
-This is an extension project for the Miffy Framework that allows you to replay events stored in
+This is an extension project for the Miffy Framework's RabbitMQ implementation that allows you to replay events stored in
 a audit log database. This project consists of a server component hosted in a docker container
 and a package to utilise the server in an existing Miffy project.
 

@@ -5,12 +5,12 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
 {
     public class RabbitMqBusReplayContext : RabbitMqBusContext
     {
-        protected string ReplayExchangeName { get; }
+        public string ReplayExchangePrefix { get; }
 
-        public RabbitMqBusReplayContext(IConnection connection,
-            string exchangeName, string replayExchangeName) : base(connection, exchangeName)
+        public RabbitMqBusReplayContext(IConnection connection, string exchangeName, string replayExchangePrefix)
+            : base(connection, exchangeName)
         {
-            ReplayExchangeName = replayExchangeName;
+            ReplayExchangePrefix = replayExchangePrefix;
         }
     }
 }

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
-        <PackageVersion>0.0.1</PackageVersion>
+        <PackageVersion>0.0.1.1</PackageVersion>
         <Title>MaartenH.Minor.Miffy.AuditLogging</Title>
         <Authors>Maarten van der Heijden</Authors>
         <Description>The AuditLogging package that can be used to interact with a running AuditLogging service</Description>

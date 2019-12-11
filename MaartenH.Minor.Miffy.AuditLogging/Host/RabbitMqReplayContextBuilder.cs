@@ -8,22 +8,22 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
 {
     public class RabbitMqReplayContextBuilder : RabbitMqContextBuilder
     {
-        protected string ReplayExchangeName { get; set; }
+        public string ReplayExchangePrefix { get; protected set; }
 
         /// <summary>
         /// Add a name for the replay exchange that will be used to replay events
         /// </summary>
-        public RabbitMqReplayContextBuilder WithReplayExchangeName(string replayExchangeName)
+        public RabbitMqReplayContextBuilder WithReplayExchangePrefix(string replayExchangePrefix)
         {
-            ReplayExchangeName = replayExchangeName;
+            ReplayExchangePrefix = replayExchangePrefix;
             return this;
         }
 
         /// <inheritdoc/>
         public override RabbitMqContextBuilder ReadFromEnvironmentVariables()
         {
-            ReplayExchangeName = Environment.GetEnvironmentVariable(EnvNames.ReplayExchangeName) ??
-                                 throw new BusConfigurationException($"{EnvNames.ReplayExchangeName} variable not set");
+            ReplayExchangePrefix = Environment.GetEnvironmentVariable(EnvVarNames.ReplayExchangeName) ??
+                                 throw new BusConfigurationException($"{EnvVarNames.ReplayExchangeName} variable not set");
 
             return base.ReadFromEnvironmentVariables();
         }
@@ -37,11 +37,10 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
 
             using (IModel model = connection.CreateModel())
             {
-                model.ExchangeDeclare(ReplayExchangeName, ExchangeType.Direct);
                 model.ExchangeDeclare(ExchangeName, ExchangeType.Topic);
             }
 
-            return new RabbitMqBusReplayContext(connection, ExchangeName, ReplayExchangeName);
+            return new RabbitMqBusReplayContext(connection, ExchangeName, ReplayExchangePrefix);
         }
     }
 }
