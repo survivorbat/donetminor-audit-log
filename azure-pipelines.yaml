@@ -6,7 +6,10 @@ trigger:
   paths:
     include:
       - src/MaartenH.Minor.Miffy.AuditLogging
+      - src/MaartenH.Minor.Miffy.AuditLogging.Teset
       - src/MaartenH.Minor.Miffy.AuditLogging.Server
+      - src/MaartenH.Minor.Miffy.AuditLogging.Server.Test
+      - src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration
       - azure-pipelines.yaml
 
 variables:
