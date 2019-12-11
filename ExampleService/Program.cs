@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using MaartenH.Minor.Miffy.AuditLogging.Host;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy;
 using Minor.Miffy.MicroServices.Events;
@@ -18,7 +19,8 @@ namespace ExampleService
             MiffyLoggerFactory.LoggerFactory = loggerFactory;
             RabbitMqLoggerFactory.LoggerFactory = loggerFactory;
 
-            using var context = new RabbitMqContextBuilder()
+            using var context = new RabbitMqReplayContextBuilder()
+                .WithReplayExchangeName("ReplayExchange")
                 .ReadFromEnvironmentVariables()
                 .CreateContext();
 
