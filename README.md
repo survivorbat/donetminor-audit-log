@@ -8,7 +8,7 @@ and a package to utilise the server in an existing Miffy project.
 
 <a href="https://www.buymeacoffee.com/MaartenH" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-red.png" height="50" widt="216" alt="Buy Me A Coffee" ></a>
 
-**MaartenH.Minor.Miffy.AuditLogging**:  
+**MaartenH.Minor.Miffy.AuditLogging**:
 This package contains the building blocks to enable a microservice to replay events from the auditlogger.
 You'll find a few commands and extension classes in this package.
 
@@ -40,4 +40,5 @@ _Todo_
 ### Notes
 
 - As long as this package is in development the master branch will be used for development.
+- We don't plan to use Mysql for much longer, we'd like to switch to MongoDB
 
