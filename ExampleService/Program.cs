@@ -20,7 +20,6 @@ namespace ExampleService
             RabbitMqLoggerFactory.LoggerFactory = loggerFactory;
 
             using var context = new RabbitMqReplayContextBuilder()
-                .WithReplayExchangePrefix("ReplayExchange")
                 .ReadFromEnvironmentVariables()
                 .CreateContext();
 

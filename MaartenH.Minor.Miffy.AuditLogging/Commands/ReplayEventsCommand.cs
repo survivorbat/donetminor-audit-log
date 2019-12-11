@@ -16,10 +16,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         {
         }
 
-        /// <summary>
-        /// The name of the exchange to send the replay events to
-        /// </summary>
-        public string ExchangeName { get; set; }
+        public string[] QueueNames { get; set; }
 
         /// <summary>
         /// Timestamp from which to begin spewing out historical events

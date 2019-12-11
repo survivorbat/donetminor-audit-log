@@ -24,7 +24,9 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
         {
             using var loggerFactory = LoggerFactory.Create(configure =>
             {
-                configure.AddConsole().SetMinimumLevel(LogLevel.Debug);
+                string logLevelString = Environment.GetEnvironmentVariable(EnvVarNames.LogLevel) ?? "Information";
+                LogLevel logLevel = Enum.Parse<LogLevel>(logLevelString);
+                configure.AddConsole().SetMinimumLevel(logLevel);
             });
 
             MiffyLoggerFactory.LoggerFactory = loggerFactory;
@@ -41,7 +43,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
                 {
                     services.AddDbContext<AuditLogContext>(config =>
                     {
-                        config.UseMySql(Environment.GetEnvironmentVariable(EnvNames.DatabaseConnectionString));
+                        config.UseMySql(Environment.GetEnvironmentVariable(EnvVarNames.DatabaseConnectionString));
                         config.UseLoggerFactory(loggerFactory);
                     }, ServiceLifetime.Singleton);
 

@@ -31,7 +31,7 @@ services:
       - broker
       - database
     environment:
-      DB_CONNECTION_STRING: "DataSource=mysql;Username=root;Password=root;Database=testdb"
+      DB_CONNECTION_STRING: "DataSource=mysql;Username=root;Password=root;Database=testdb;"
       BROKER_CONNECTION_STRING: "amqp://guest:guest@rabbitmq"
       BROKER_EXCHANGE_NAME: "TestExchange"
     restart: unless-stopped
@@ -45,4 +45,5 @@ services:
     environment:
       BROKER_CONNECTION_STRING: "amqp://guest:guest@rabbitmq"
       BROKER_EXCHANGE_NAME: "TestExchange"
+      BROKER_REPLAY_EXCHANGE_PREFIX: "ReplyExchange"
     restart: unless-stopped

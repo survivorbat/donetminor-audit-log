@@ -22,7 +22,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.DAL
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder.UseMySql(
-                    Environment.GetEnvironmentVariable(EnvNames.DatabaseConnectionString));
+                    Environment.GetEnvironmentVariable(EnvVarNames.DatabaseConnectionString));
             }
         }
 
