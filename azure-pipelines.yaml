@@ -97,7 +97,7 @@ stages:
 #
   - stage: Release
     displayName: Release
-    dependsOn: Integration
+#    dependsOn: Integration
 #    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     jobs:
 #      - job: ReleaseNuGet
