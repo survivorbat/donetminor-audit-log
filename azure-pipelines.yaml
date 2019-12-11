@@ -17,8 +17,7 @@ variables:
   projects: |
     MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj
     MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
-  dockerProjects: |
-    MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
+  dockerProject: MaartenH.Minor.Miffy.AuditLogging.Server
   testProjects: |
     MaartenH.Minor.Miffy.AuditLogging.Test
     MaartenH.Minor.Miffy.AuditLogging.Server.Test
@@ -130,8 +129,8 @@ stages:
             inputs:
               command: publish
               publishWebProjects: false
-              projects: $(dockerProjects)
-              arguments: '--configuration Release --self-contained -f "netcoreapp3.0" -r "linux-x64" --output "$(projectPath)/obj/Docker/publish"'
+              projects: $(dockerProject)/*.csproj
+              arguments: '--configuration Release --self-contained -f "netcoreapp3.0" -r "linux-x64" --output "$(dockerProject)/obj/Docker/publish"'
               zipAfterPublish: false
               modifyOutputPath: false
 
@@ -140,6 +139,6 @@ stages:
               containerRegistry: '$(dockerRegistry)'
               repository: '$(imageRepository)'
               command: 'buildAndPush'
-              Dockerfile: '$(projectPath)/Dockerfile'
+              Dockerfile: '$(dockerProject)/Dockerfile'
               tags: $(tag)
 
