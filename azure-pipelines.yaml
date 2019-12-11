@@ -15,7 +15,9 @@ trigger:
 variables:
   imageRepository: 'survivorbat/maartenh-miffy-auditlogger'
   dockerRegistry: 'DockerHub'
-  tag: '$(Build.BuildId)'
+
+  tag: '0.0.1.1-$(Build.BuildId)'
+
   buildConfiguration: 'Release'
   projects: |
     MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj
