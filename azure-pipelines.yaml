@@ -15,13 +15,13 @@ variables:
   tag: '$(Build.BuildId)'
   buildConfiguration: 'Release'
   projects: |
-    src/MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj
-    src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
+    MaartenH.Minor.Miffy.AuditLogging/MaartenH.Minor.Miffy.AuditLogging.csproj
+    MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
   dockerProjects: |
-    src/MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
+    MaartenH.Minor.Miffy.AuditLogging.Server/MaartenH.Minor.Miffy.AuditLogging.Server.csproj
   testProjects: |
-    src/MaartenH.Minor.Miffy.AuditLogging.Test
-    src/MaartenH.Minor.Miffy.AuditLogging.Server.Test
+    MaartenH.Minor.Miffy.AuditLogging.Test
+    MaartenH.Minor.Miffy.AuditLogging.Server.Test
   integrationTestProjects: |
     **/*.Integration/*.csproj
   projectKey: MaartenH:Miffy-AuditLogging
