@@ -15,6 +15,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
         /// </summary>
         public MicroserviceReplayHost(IBusContext<IConnection> connection,
             IEnumerable<MicroserviceListener> listeners,
+            IEnumerable<MicroserviceListener> replayListeners,
             IEnumerable<MicroserviceCommandListener> commandListeners,
             ILogger<MicroserviceHost> logger) : base(connection, listeners, commandListeners, logger)
         {

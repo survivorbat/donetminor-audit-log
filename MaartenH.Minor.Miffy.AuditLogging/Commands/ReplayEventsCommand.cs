@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Minor.Miffy.MicroServices.Commands;
 
@@ -12,11 +13,9 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// Initializer tha created a new command with a set
         /// </summary>
-        public ReplayEventsCommand() : base("auditlog.replay")
+        public ReplayEventsCommand(Guid processId) : base("auditlog.replay", processId)
         {
         }
-
-        public string[] QueueNames { get; set; }
 
         /// <summary>
         /// Timestamp from which to begin spewing out historical events
