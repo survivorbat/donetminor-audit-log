@@ -1,7 +1,11 @@
-﻿using System.Threading;
+﻿using System;
+using System.Linq;
+using System.Threading;
+using MaartenH.Minor.Miffy.AuditLogging.Commands;
 using MaartenH.Minor.Miffy.AuditLogging.Host;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy;
+using Minor.Miffy.MicroServices.Commands;
 using Minor.Miffy.MicroServices.Events;
 using Minor.Miffy.MicroServices.Host;
 using Minor.Miffy.RabbitMQBus;
@@ -51,13 +55,34 @@ namespace ExampleService
             /**
              * Now create the host and start it
              */
-            using var host = hostBuilder.CreateHost();
+            using IMicroserviceReplayHost host = (MicroserviceReplayHost) hostBuilder.CreateHost();
             host.Start();
 
             /**
              * Start spamming events to the auditlogger as a demonstration
              */
             StartSpammingEvents(context);
+
+            /**
+             * Now let's start replaying, first create a replay command
+             */
+            Guid processId = Guid.NewGuid();
+            ReplayEventsCommand replayEventsCommand = new ReplayEventsCommand(processId);
+
+            /**
+             * Command publisher to publish commands with
+             */
+            ICommandPublisher publisher = new CommandPublisher(context);
+
+            /**
+             * Create a replay command publisher
+             */
+            IReplayCommandPublisher replayCommandPublisher = new ReplayCommandPublisher(host, publisher, loggerFactory);
+
+            /**
+             * Commence a replay!
+             */
+            replayCommandPublisher.Initiate(replayEventsCommand);
         }
 
         /// <summary>
@@ -73,7 +98,7 @@ namespace ExampleService
             /**
              * Generate a random event and publish it, then wait 4000 seconds to repeat it
              */
-            while (true)
+            foreach(var _ in Enumerable.Range(0, 20))
             {
                 DomainEvent domainEvent = ExampleData.GenerateRandomEvent();
                 eventPublisher.Publish(domainEvent);

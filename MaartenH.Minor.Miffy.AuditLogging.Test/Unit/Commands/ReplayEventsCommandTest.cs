@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
 {
     [TestClass]
-    public class ReplayEventCommandTest
+    public class ReplayEventsCommandTest
     {
         [TestMethod]
         public void EnsureDestinationQueueIsProperlySet()

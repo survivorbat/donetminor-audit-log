@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using MaartenH.Minor.Miffy.AuditLogging.Events;
-using MaartenH.Minor.Miffy.AuditLogging.Exceptions;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy;
 using Minor.Miffy.MicroServices.Events;
@@ -99,7 +98,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
             {
                 Logger.LogCritical("Amount of Event listeners is not equal to the amount of Replay listeners");
 
-                throw new ListenerValidationException(
+                throw new BusConfigurationException(
                     $"There are {EventListeners.Count} event listeners but {ReplayListeners.Count} replay listeners");
             }
 
@@ -110,7 +109,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
                 if (normalListener == null)
                 {
                     Logger.LogCritical($"ReplayListener of {listener.Queue} has no non-replay counterpart.");
-                    throw new ListenerValidationException($"ReplayListener of {listener.Queue} has no non-replay counterpart.");
+                    throw new BusConfigurationException($"ReplayListener of {listener.Queue} has no non-replay counterpart.");
                 }
 
                 Logger.LogDebug($"Applying configuration of listener for queue {listener.Queue} to replay listener");
@@ -121,11 +120,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
         /// <summary>
         /// Create a microservice replay host
         /// </summary>
-        public override MicroserviceHost CreateHost()
+        public override IMicroserviceHost CreateHost()
         {
             ValidateReplayListeners();
-            var logger = LoggerFactory.CreateLogger<MicroserviceReplayHost>();
-            return new MicroserviceReplayHost(Context, ReplayListeners, EventListeners, CommandListeners, logger);
+            ILogger<MicroserviceReplayHost> logger = LoggerFactory.CreateLogger<MicroserviceReplayHost>();
+            return new MicroserviceReplayHost(Context, EventListeners, ReplayListeners, CommandListeners, logger);
         }
     }
 }

@@ -19,8 +19,6 @@ These packages can be found on nuget.org.
 
 ## Exceptions
 
-No special exceptions yet :)
-
 ## Example configuration
 
 To allow you for a quick start, here are a few examples on how to use this library.
