@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy;
 using Minor.Miffy.MicroServices.Commands;
@@ -47,6 +48,10 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
                 throw new BusConfigurationException("Attempted to replay the MicroserviceHost, but it is already replaying.");
             }
 
+            Logger.LogInformation($"Starting replay with {ReplayListeners.Count()} replay listeners");
+
+            IsReplaying = true;
+
             foreach (MicroserviceReplayListener callback in ReplayListeners)
             {
                 Logger.LogInformation($"Registering replay queue {callback.Queue} with expressions {string.Join(", ", callback.TopicExpressions)}");
@@ -67,6 +72,10 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
             {
                 throw new BusConfigurationException("Attempted to stop replaying the MicroserviceHost, but it is not replaying.");
             }
+
+            Logger.LogInformation($"Stopping replay with {ReplayListeners.Count()} replay listeners");
+
+            IsReplaying = false;
 
             ReplayMessageReceivers.ForEach(e => e.Dispose());
         }

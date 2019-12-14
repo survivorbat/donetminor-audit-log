@@ -11,7 +11,14 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
     public class ReplayEventsCommand : DomainCommand
     {
         /// <summary>
-        /// Initializer tha created a new command with a set
+        /// Initialize a new ReplayEventsCommand with an empty process id
+        /// </summary>
+        public ReplayEventsCommand() : base("auditlog.replay", Guid.Empty)
+        {
+        }
+
+        /// <summary>
+        /// Initialize a new ReplayEventsCommand with a given process id
         /// </summary>
         public ReplayEventsCommand(Guid processId) : base("auditlog.replay", processId)
         {

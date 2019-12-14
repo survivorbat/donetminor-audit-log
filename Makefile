@@ -23,6 +23,12 @@ build: ## Build the docker containers
 
 	docker-compose -f docker-compose.yaml -p auditlogger build
 
+audit.logs: ## See the logs of the audit service
+	docker logs -f auditlogger_auditlog_1
+
+example.logs: ## See the logs of the example service
+	docker logs -f auditlogger_exampleservice_1
+
 up: ## Start the containers in docker-compose
 	make build
 	docker-compose -f docker-compose.yaml -p auditlogger up -d

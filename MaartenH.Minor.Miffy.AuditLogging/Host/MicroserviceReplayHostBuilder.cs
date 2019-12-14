@@ -17,12 +17,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
         /// <summary>
         /// A list of listeners that are exclusive for replaying events
         /// </summary>
-        protected List<MicroserviceReplayListener> ReplayListeners = new List<MicroserviceReplayListener>();
+        protected List<MicroserviceReplayListener> ReplayListeners { get; } = new List<MicroserviceReplayListener>();
 
         /// <summary>
         /// Analyze a type and register its methods as an event, command or replay listener
         /// </summary>
-        /// <param name="type"></param>
         protected override void RegisterListener(TypeInfo type)
         {
             Logger.LogTrace($"Retrieving relevant methods from type {type.Name}");

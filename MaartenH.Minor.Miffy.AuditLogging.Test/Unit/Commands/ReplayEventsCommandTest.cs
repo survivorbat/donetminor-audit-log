@@ -11,7 +11,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
         public void EnsureDestinationQueueIsProperlySet()
         {
             // Arct
-            ReplayEventsCommand command = new ReplayEventsCommand(new Guid());
+            ReplayEventsCommand command = new ReplayEventsCommand();
 
             // Assert
             Assert.AreEqual("auditlog.replay", command.DestinationQueue);
@@ -30,6 +30,16 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
 
             // Assert
             Assert.AreEqual(guid, command.ProcessId);
+        }
+
+        [TestMethod]
+        public void EnsureInitializingCommandSetsEmptyProcessId()
+        {
+            // Act
+            ReplayEventsCommand command = new ReplayEventsCommand();
+
+            // Assert
+            Assert.AreEqual(command.ProcessId, Guid.Empty);
         }
     }
 }

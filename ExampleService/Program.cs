@@ -70,13 +70,9 @@ namespace ExampleService
             ReplayEventsCommand replayEventsCommand = new ReplayEventsCommand(processId);
 
             /**
-             * Command publisher to publish commands with
+             * Create the publishers
              */
             ICommandPublisher publisher = new CommandPublisher(context);
-
-            /**
-             * Create a replay command publisher
-             */
             IReplayCommandPublisher replayCommandPublisher = new ReplayCommandPublisher(host, publisher, loggerFactory);
 
             /**
@@ -98,11 +94,13 @@ namespace ExampleService
             /**
              * Generate a random event and publish it, then wait 4000 seconds to repeat it
              */
-            foreach(var _ in Enumerable.Range(0, 20))
+            foreach(int index in Enumerable.Range(0, 10))
             {
+                Console.WriteLine($"Publishing event {index + 1}");
+
                 DomainEvent domainEvent = ExampleData.GenerateRandomEvent();
                 eventPublisher.Publish(domainEvent);
-                Thread.Sleep(4000);
+                Thread.Sleep(1000);
             }
         }
     }
