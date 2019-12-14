@@ -13,15 +13,16 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// Initialize a new ReplayEventsCommand with an empty process id
         /// </summary>
-        public ReplayEventsCommand() : base("auditlog.replay", Guid.Empty)
+        public ReplayEventsCommand(long toTimeStamp) : this(toTimeStamp, Guid.Empty)
         {
         }
 
         /// <summary>
         /// Initialize a new ReplayEventsCommand with a given process id
         /// </summary>
-        public ReplayEventsCommand(Guid processId) : base("auditlog.replay", processId)
+        public ReplayEventsCommand(long toTimeStamp, Guid processId) : base("auditlog.replay", processId)
         {
+            ToTimeStamp = toTimeStamp;
         }
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// Timestamp at which to stop spewing out historical events
         /// </summary>
-        public long ToTimeStamp { get; set; }
+        public long ToTimeStamp { get; }
 
         /// <summary>
         /// The type of events that are desired

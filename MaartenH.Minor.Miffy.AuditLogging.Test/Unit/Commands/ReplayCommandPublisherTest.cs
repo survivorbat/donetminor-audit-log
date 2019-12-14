@@ -20,7 +20,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
             hostMock.SetupGet(e => e.IsListening).Returns(true);
             hostMock.SetupGet(e => e.IsPaused).Returns(false);
 
-            ReplayEventsCommand command = new ReplayEventsCommand();
+            ReplayEventsCommand command = new ReplayEventsCommand(0);
 
             // Act
             commandPublisher.Initiate(command);
@@ -40,7 +40,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
             hostMock.SetupGet(e => e.IsListening).Returns(true);
             hostMock.SetupGet(e => e.IsPaused).Returns(true);
 
-            ReplayEventsCommand command = new ReplayEventsCommand();
+            ReplayEventsCommand command = new ReplayEventsCommand(0);
 
             // Act
             commandPublisher.Initiate(command);
@@ -60,7 +60,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
             hostMock.SetupGet(e => e.IsListening).Returns(false);
             hostMock.SetupGet(e => e.IsPaused).Returns(false);
 
-            ReplayEventsCommand command = new ReplayEventsCommand();
+            ReplayEventsCommand command = new ReplayEventsCommand(0);
 
             // Act
             commandPublisher.Initiate(command);
@@ -80,7 +80,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
             hostMock.SetupGet(e => e.IsListening).Returns(false);
             hostMock.SetupGet(e => e.IsPaused).Returns(true);
 
-            ReplayEventsCommand command = new ReplayEventsCommand();
+            ReplayEventsCommand command = new ReplayEventsCommand(0);
 
             // Act
             commandPublisher.Initiate(command);
@@ -100,7 +100,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
             hostMock.SetupGet(e => e.IsListening).Returns(true);
             hostMock.SetupGet(e => e.IsPaused).Returns(false);
 
-            ReplayEventsCommand command = new ReplayEventsCommand();
+            ReplayEventsCommand command = new ReplayEventsCommand(0);
 
             // Act
             commandPublisher.Initiate(command);
@@ -120,7 +120,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
             hostMock.SetupGet(e => e.IsListening).Returns(true);
             hostMock.SetupGet(e => e.IsPaused).Returns(false);
 
-            ReplayEventsCommand command = new ReplayEventsCommand();
+            ReplayEventsCommand command = new ReplayEventsCommand(0);
 
             // Act
             commandPublisher.Initiate(command);
@@ -139,7 +139,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
 
             hostMock.SetupGet(e => e.IsListening).Returns(true);
 
-            ReplayEventsCommand command = new ReplayEventsCommand();
+            ReplayEventsCommand command = new ReplayEventsCommand(0);
 
             // Act
             commandPublisher.Initiate(command);
@@ -158,7 +158,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Commands
 
             hostMock.SetupGet(e => e.IsListening).Returns(false);
 
-            ReplayEventsCommand command = new ReplayEventsCommand();
+            ReplayEventsCommand command = new ReplayEventsCommand(0);
 
             // Act
             commandPublisher.Initiate(command);
