@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Minor.Miffy;
 using Minor.Miffy.MicroServices.Commands;
 using Minor.Miffy.MicroServices.Events;
-using Minor.Miffy.MicroServices.Host;
 using Minor.Miffy.RabbitMQBus;
 using RabbitMQ.Client;
 
@@ -67,7 +66,7 @@ namespace ExampleService
              * Now let's start replaying, first create a replay command
              */
             Guid processId = Guid.NewGuid();
-            ReplayEventsCommand replayEventsCommand = new ReplayEventsCommand(processId);
+            ReplayEventsCommand replayEventsCommand = new ReplayEventsCommand(DateTime.Now.AddDays(5).ToFileTimeUtc(), processId);
 
             /**
              * Create the publishers

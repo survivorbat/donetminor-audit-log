@@ -6,8 +6,6 @@ This is an extension project for the Miffy Framework's RabbitMQ implementation t
 a audit log database. This project consists of a server component hosted in a docker container
 and a package to utilise the server in an existing Miffy project.
 
-<a href="https://www.buymeacoffee.com/MaartenH" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-red.png" height="50" widt="216" alt="Buy Me A Coffee" ></a>
-
 **MaartenH.Minor.Miffy.AuditLogging**:
 This package contains the building blocks to enable a microservice to replay events from the auditlogger.
 You'll find a few commands and extension classes in this package.
@@ -16,8 +14,6 @@ You'll find a few commands and extension classes in this package.
 ![Nuget](https://img.shields.io/nuget/dt/MaartenH.Minor.Miffy.AuditLogging)
 
 These packages can be found on nuget.org.
-
-## Exceptions
 
 ## Example configuration
 
@@ -40,3 +36,4 @@ _Todo_
 - As long as this package is in development the master branch will be used for development.
 - We don't plan to use Mysql for much longer, we'd like to switch to MongoDB
 
+<a href="https://www.buymeacoffee.com/MaartenH" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-red.png" height="50" widt="216" alt="Buy Me A Coffee" ></a>

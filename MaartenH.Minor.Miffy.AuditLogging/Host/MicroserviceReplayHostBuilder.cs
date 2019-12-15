@@ -17,7 +17,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
         /// <summary>
         /// A list of listeners that are exclusive for replaying events
         /// </summary>
-        protected List<MicroserviceReplayListener> ReplayListeners { get; } = new List<MicroserviceReplayListener>();
+        protected virtual List<MicroserviceReplayListener> ReplayListeners { get; } = new List<MicroserviceReplayListener>();
 
         /// <summary>
         /// Analyze a type and register its methods as an event, command or replay listener
@@ -91,7 +91,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
         /// is properly setup, copy its non-replay counterpart's settings over to the
         /// replay listener.
         /// </summary>
-        protected void ValidateReplayListeners()
+        protected virtual void ValidateReplayListeners()
         {
             if (EventListeners.Count != ReplayListeners.Count)
             {
