@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using MaartenH.Minor.Miffy.AuditLogging.Commands;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.CommandListeners;
@@ -72,6 +74,33 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.CommandListeners
 
             // Assert
             Assert.AreEqual(amount, result);
+        }
+
+        [TestMethod]
+        [DataRow(0)]
+        [DataRow(1)]
+        [DataRow(5)]
+        [DataRow(510)]
+        public void FetchedLogItemsArePublished(int amount)
+        {
+            // Arrange
+            var repositoryMock = new Mock<IAuditLogItemRepository>();
+            var eventPublisherMock = new Mock<IEventPublisher>();
+
+            repositoryMock.Setup(e => e.FindBy(It.IsAny<AuditLogItemCriteria>()))
+                .Returns(Enumerable.Range(0, amount).Select(e => new AuditLogItem()));
+
+            ReplayCommandListener commandListener = new ReplayCommandListener(repositoryMock.Object, eventPublisherMock.Object, new LoggerFactory());
+
+            var command = new ReplayEventsCommand(0);
+
+            // Act
+            commandListener.Handle(command);
+
+            Thread.Sleep(1000);
+
+            // Assert
+            eventPublisherMock.Verify(e => e.Publish(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(amount));
         }
     }
 }
