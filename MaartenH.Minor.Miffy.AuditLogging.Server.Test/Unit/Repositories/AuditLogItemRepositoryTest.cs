@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using MaartenH.Minor.Miffy.AuditLogging.Constants;
 using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Repositories;
@@ -79,6 +80,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
             new AuditLogItem {TimeStamp = 12, Data = "Test", Topic = "TopicTest", Type = "TypeTest", Id = Guid.NewGuid().ToString()},
             new AuditLogItem {TimeStamp = 15, Data = "Test", Topic = "TestTopic", Type = "TestType", Id = Guid.NewGuid().ToString()},
             new AuditLogItem {TimeStamp = 23, Data = "Test", Topic = "TopicTest2", Type = "TypeTest", Id = Guid.NewGuid().ToString()},
+            new AuditLogItem {TimeStamp = 120, Data = "Test", Topic = ReplayTopicNames.ReplayStartEventTopic, Type = "EndReplayEvent", Id = Guid.NewGuid().ToString()},
+            new AuditLogItem {TimeStamp = 150, Data = "Test", Topic = ReplayTopicNames.ReplayEndEventTopic, Type = "StartReplayEvent", Id = Guid.NewGuid().ToString()},
         };
 
         [TestMethod]
@@ -88,7 +91,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
         [DataRow("TestTopic,TypeTest", 2)]
         [DataRow("TestTopic,TopicTest2", 3)]
         [DataRow("TestTopic,TopicTest2,TopicTest", 4)]
-        public void RetrievingItemsWithTypeWorks(string topics, int expectedAmount)
+        public void RetrievingItemsWithTopicWorks(string topics, int expectedAmount)
         {
             string[] topicNames = topics.Split(',');
 
@@ -99,6 +102,29 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
             var repository = new AuditLogItemRepository(context);
 
             var criteria = new AuditLogItemCriteria { Topics = topicNames, ToTimeStamp = 100 };
+
+            // Act
+            AuditLogItem[] results = repository.FindBy(criteria).ToArray();
+
+            // Assert
+            Assert.AreEqual(expectedAmount, results.Length);
+        }
+
+        [TestMethod]
+        [DataRow("TestType", 2)]
+        [DataRow("TypeTest", 2)]
+        [DataRow("TypeTest,TestType", 4)]
+        public void RetrievingItemsWithTypeWorks(string types, int expectedAmount)
+        {
+            string[] typeNames = types.Split(',');
+
+            // Arrange
+            InjectData(_dummyData);
+
+            using var context = new AuditLogContext(_options);
+            var repository = new AuditLogItemRepository(context);
+
+            var criteria = new AuditLogItemCriteria { Types = typeNames, ToTimeStamp = 100 };
 
             // Act
             AuditLogItem[] results = repository.FindBy(criteria).ToArray();
@@ -127,6 +153,31 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
             {
                 FromTimeStamp = fromTimeStamp,
                 ToTimeStamp = toTimeStamp
+            };
+
+            // Act
+            AuditLogItem[] results = repository.FindBy(criteria).ToArray();
+
+            // Assert
+            Assert.AreEqual(expectedAmount, results.Length);
+        }
+
+        [TestMethod]
+        [DataRow(true, 6)]
+        [DataRow(false, 4)]
+        public void AllowingMetaEventsFiltersEvents(bool allowMeta, int expectedAmount)
+        {
+            // Arrange
+            InjectData(_dummyData);
+
+            using var context = new AuditLogContext(_options);
+            var repository = new AuditLogItemRepository(context);
+
+            var criteria = new AuditLogItemCriteria
+            {
+                AllowMetaEvents = allowMeta,
+                ToTimeStamp = 600,
+                FromTimeStamp = 0
             };
 
             // Act

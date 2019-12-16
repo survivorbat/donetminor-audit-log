@@ -6,5 +6,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Constants
         public const string ReplayEndEventTopic = "auditlog.replay.end";
         public const string ReplayEventsCommandDestinationQueue = "auditlog.replay";
         public const string ReplayEventTopicPrefix = "replay_";
+
+        public static readonly string[] MetaTopics = { ReplayEndEventTopic, ReplayStartEventTopic };
     }
 }

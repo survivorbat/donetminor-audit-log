@@ -29,6 +29,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         }
 
         /// <summary>
+        /// Whether to allow auditlogger events to be published in the replay
+        /// </summary>
+        public bool AllowMetaEvents { get; set; }
+
+        /// <summary>
         /// Timestamp from which to begin spewing out historical events
         /// </summary>
         public long FromTimeStamp { get; set; }

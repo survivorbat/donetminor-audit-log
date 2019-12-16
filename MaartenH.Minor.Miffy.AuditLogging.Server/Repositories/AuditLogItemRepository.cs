@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using MaartenH.Minor.Miffy.AuditLogging.Constants;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.DAL;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
@@ -42,6 +43,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Repositories
             return _auditLogContext.AuditLogItems
                 .AsNoTracking()
                 .AsParallel()
+                .Where(dbItem => criteria.AllowMetaEvents || !ReplayTopicNames.MetaTopics.Contains(dbItem.Topic))
                 .Where(dbItem => criteria.ToTimeStamp >= dbItem.TimeStamp)
                 .Where(dbItem => criteria.FromTimeStamp <= dbItem.TimeStamp)
                 .Where(dbItem => !criteria.Topics.Any() || criteria.Topics.Contains(dbItem.Topic))

@@ -9,6 +9,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Models
     public class AuditLogItemCriteria
     {
         /// <summary>
+        /// Whether to allow auditlogger events to be published in the replay
+        /// </summary>
+        public bool AllowMetaEvents { get; set; }
+
+        /// <summary>
         /// Types of events
         /// </summary>
         public IEnumerable<string> Types { get; set; } = new List<string>();
@@ -38,7 +43,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Models
                 Topics = command.Topics,
                 Types = command.Types,
                 FromTimeStamp = command.FromTimeStamp,
-                ToTimeStamp = command.ToTimeStamp
+                ToTimeStamp = command.ToTimeStamp,
+                AllowMetaEvents = command.AllowMetaEvents
             };
         }
     }

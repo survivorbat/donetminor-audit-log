@@ -46,4 +46,4 @@ services:
       BROKER_CONNECTION_STRING: "amqp://guest:guest@rabbitmq"
       BROKER_EXCHANGE_NAME: "TestExchange"
       BROKER_REPLAY_EXCHANGE_PREFIX: "ReplyExchange"
-    restart: unless-stopped
+    restart: on-failure
