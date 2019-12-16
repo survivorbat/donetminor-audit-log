@@ -88,7 +88,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.CommandListeners
             var eventPublisherMock = new Mock<IEventPublisher>();
 
             repositoryMock.Setup(e => e.FindBy(It.IsAny<AuditLogItemCriteria>()))
-                .Returns(Enumerable.Range(0, amount).Select(e => new AuditLogItem()));
+                .Returns(Enumerable.Range(0, amount).Select(e => new AuditLogItem {Id = Guid.NewGuid().ToString(), Data = "test", Topic = "TestTopic", Type = "TestType", TimeStamp = 10}));
 
             ReplayCommandListener commandListener = new ReplayCommandListener(repositoryMock.Object, eventPublisherMock.Object, new LoggerFactory());
 
@@ -97,7 +97,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.CommandListeners
             // Act
             commandListener.Handle(command);
 
-            Thread.Sleep(5000);
+            Thread.Sleep(1000);
 
             // Assert
             eventPublisherMock.Verify(e => e.PublishAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(amount));

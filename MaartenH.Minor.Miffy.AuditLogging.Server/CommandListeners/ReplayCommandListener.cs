@@ -69,11 +69,21 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.CommandListeners
                 {
                     _logger.LogTrace($"Publishing logitem with id {logItem.Id}");
 
-                    var task =_eventPublisher.PublishAsync(logItem.TimeStamp,
-                        $"{ReplayTopicNames.ReplayEventTopicPrefix}{logItem.Topic}", new Guid(logItem.Id), logItem.Type,
-                        logItem.Data);
+                    try
+                    {
+                        Task task = _eventPublisher.PublishAsync(logItem.TimeStamp,
+                            $"{ReplayTopicNames.ReplayEventTopicPrefix}{logItem.Topic}", new Guid(logItem.Id),
+                            logItem.Type,
+                            logItem.Data);
 
-                    tasks.Add(task);
+                        tasks.Add(task);
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogCritical($"A critical exception occured while asynchronously publishing event {logItem.Id} " +
+                                            $"with exception {e.Message}");
+                        throw;
+                    }
                 };
 
                 _logger.LogTrace("Waiting for all events to be published");
