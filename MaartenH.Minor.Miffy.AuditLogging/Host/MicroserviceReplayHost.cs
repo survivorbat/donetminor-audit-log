@@ -64,7 +64,12 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
 
             foreach (MicroserviceReplayListener callback in ReplayListeners.Append(StartListener).Append(EndListener))
             {
-                Logger.LogInformation($"Registering replay queue {callback.Queue} with expressions {string.Join(", ", callback.TopicExpressions)}");
+                if (callback == null)
+                {
+                    continue;
+                }
+
+                Logger.LogInformation($"Registering replay queue {callback.Queue} with expressions: {string.Join(", ", callback.TopicExpressions)}");
 
                 IMessageReceiver receiver = Context.CreateMessageReceiver(callback.Queue, callback.TopicExpressions);
                 receiver.StartReceivingMessages();
