@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Minor.Miffy.MicroServices.Commands;
 
@@ -38,11 +39,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// The type of events that are desired
         /// </summary>
-        public string Type { get; set; }
+        public List<string> Types { get; set; }
 
         /// <summary>
         /// Optinnal topic of all the events that you want to have returned
         /// </summary>
-        public string Topic { get; set; }
+        public List<string> Topics { get; set; }
     }
 }

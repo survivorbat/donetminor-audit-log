@@ -103,7 +103,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
 
             foreach (MicroserviceReplayListener listener in ReplayListeners)
             {
-                MicroserviceListener normalListener = EventListeners.Find(e => listener.Equals(e));
+                MicroserviceListener normalListener = EventListeners.Find(e => listener.Queue == e.Queue);
 
                 if (normalListener == null)
                 {

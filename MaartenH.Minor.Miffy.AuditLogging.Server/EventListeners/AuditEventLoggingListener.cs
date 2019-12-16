@@ -7,19 +7,34 @@ using Newtonsoft.Json;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners
 {
+    /// <summary>
+    /// Fan-in event listener that listens to all events coming in
+    /// </summary>
     public class AuditEventLoggingListener
     {
+        /// <summary>
+        /// Repository used to save items with
+        /// </summary>
         private readonly IAuditLogItemRepository _repository;
 
+        /// <summary>
+        /// Logger
+        /// </summary>
         private readonly ILogger<AuditEventLoggingListener> _logger;
 
+        /// <summary>
+        /// Instantiate an auditlog event listener with a repository and a loggerfactory
+        /// </summary>
         public AuditEventLoggingListener(IAuditLogItemRepository repository, ILoggerFactory loggerFactory)
         {
             _repository = repository;
             _logger = loggerFactory.CreateLogger<AuditEventLoggingListener>();
         }
 
-        [EventListener("audit.event.queue")]
+        /// <summary>
+        /// Handle an incoming event
+        /// </summary>
+        [EventListener("auditlog.events")]
         [Topic("#")]
         public void Handle(string evt)
         {

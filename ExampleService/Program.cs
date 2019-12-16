@@ -27,7 +27,7 @@ namespace ExampleService
              */
             using var loggerFactory = LoggerFactory.Create(configure =>
             {
-                configure.AddConsole().SetMinimumLevel(LogLevel.Information);
+                configure.AddConsole().SetMinimumLevel(LogLevel.Debug);
             });
 
             /**

@@ -56,7 +56,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
                 {
                     Data = data,
                     Topic = topic,
-                    Id = Guid.NewGuid().ToString()
+                    Id = Guid.NewGuid()
                 };
 
                 // Act
@@ -76,10 +76,10 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
         }
 
         private readonly AuditLogItem[] _dummyData = {
-            new AuditLogItem {TimeStamp = 9, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid().ToString()},
-            new AuditLogItem {TimeStamp = 12, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid().ToString()},
-            new AuditLogItem {TimeStamp = 15, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid().ToString()},
-            new AuditLogItem {TimeStamp = 23, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid().ToString()},
+            new AuditLogItem {TimeStamp = 9, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid()},
+            new AuditLogItem {TimeStamp = 12, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid()},
+            new AuditLogItem {TimeStamp = 15, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid()},
+            new AuditLogItem {TimeStamp = 23, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid()},
         };
 
         [TestMethod]
@@ -102,7 +102,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
             };
 
             // Act
-            AuditLogItem[] results = repository.FindByCriteria(criteria).ToArray();
+            AuditLogItem[] results = repository.FindBy(criteria).ToArray();
 
             // Assert
             Assert.AreEqual(expectedAmount, results.Length);

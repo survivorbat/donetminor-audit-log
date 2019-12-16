@@ -12,9 +12,19 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
     public class MicroserviceReplayHost : MicroserviceHost, IMicroserviceReplayHost
     {
         /// <summary>
-        /// Listeners specificly for replaying events
+        /// Listeners specifically for replaying events
         /// </summary>
         public IEnumerable<MicroserviceReplayListener> ReplayListeners { get; }
+
+        /// <summary>
+        /// Listener specifically to listen for the 'end' event
+        /// </summary>
+        public MicroserviceReplayListener EndListener { get; set; }
+
+        /// <summary>
+        /// Listener specifically to listen for the 'start' event
+        /// </summary>
+        public MicroserviceReplayListener StartListener { get; set; }
 
         /// <summary>
         /// Indicates whether the host is currently replaying or not
@@ -52,7 +62,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
 
             IsReplaying = true;
 
-            foreach (MicroserviceReplayListener callback in ReplayListeners)
+            foreach (MicroserviceReplayListener callback in ReplayListeners.Append(StartListener).Append(EndListener))
             {
                 Logger.LogInformation($"Registering replay queue {callback.Queue} with expressions {string.Join(", ", callback.TopicExpressions)}");
 
