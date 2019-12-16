@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.Models

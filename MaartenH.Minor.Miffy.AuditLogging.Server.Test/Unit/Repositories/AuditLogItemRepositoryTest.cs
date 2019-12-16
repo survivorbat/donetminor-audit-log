@@ -5,7 +5,6 @@ using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories

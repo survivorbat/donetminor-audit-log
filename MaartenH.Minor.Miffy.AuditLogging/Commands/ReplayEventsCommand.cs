@@ -31,7 +31,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// Timestamp from which to begin spewing out historical events
         /// </summary>
-        public long FromTimeStamp { get; set; } = 0;
+        public long FromTimeStamp { get; set; }
 
         /// <summary>
         /// Timestamp at which to stop spewing out historical events
