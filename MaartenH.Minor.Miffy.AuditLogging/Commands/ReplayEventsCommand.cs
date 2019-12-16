@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Minor.Miffy.MicroServices.Commands;
+using Newtonsoft.Json;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Commands
 {
@@ -14,6 +15,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// Initialize a new ReplayEventsCommand with an empty process id
         /// </summary>
+        [JsonConstructor]
         public ReplayEventsCommand(long toTimeStamp) : this(toTimeStamp, Guid.Empty)
         {
         }
@@ -29,7 +31,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// Timestamp from which to begin spewing out historical events
         /// </summary>
-        public long? FromTimeStamp { get; set; }
+        public long FromTimeStamp { get; set; } = 0;
 
         /// <summary>
         /// Timestamp at which to stop spewing out historical events
@@ -39,11 +41,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
         /// <summary>
         /// The type of events that are desired
         /// </summary>
-        public List<string> Types { get; set; }
+        public List<string> Types { get; set; } = new List<string>();
 
         /// <summary>
         /// Optinnal topic of all the events that you want to have returned
         /// </summary>
-        public List<string> Topics { get; set; }
+        public List<string> Topics { get; set; } = new List<string>();
     }
 }

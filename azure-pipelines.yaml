@@ -5,11 +5,11 @@ trigger:
       - develop
   paths:
     include:
-      - src/MaartenH.Minor.Miffy.AuditLogging
-      - src/MaartenH.Minor.Miffy.AuditLogging.Test
-      - src/MaartenH.Minor.Miffy.AuditLogging.Server
-      - src/MaartenH.Minor.Miffy.AuditLogging.Server.Test
-      - src/MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration
+      - MaartenH.Minor.Miffy.AuditLogging
+      - MaartenH.Minor.Miffy.AuditLogging.Test
+      - MaartenH.Minor.Miffy.AuditLogging.Server
+      - MaartenH.Minor.Miffy.AuditLogging.Server.Test
+      - MaartenH.Minor.Miffy.AuditLogging.Server.Test.Integration
       - azure-pipelines.yaml
 
 variables:

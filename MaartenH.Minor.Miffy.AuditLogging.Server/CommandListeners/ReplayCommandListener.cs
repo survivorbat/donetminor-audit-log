@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using MaartenH.Minor.Miffy.AuditLogging.Constants;
 using MaartenH.Minor.Miffy.AuditLogging.Events;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
+using Microsoft.Extensions.Logging;
 using Minor.Miffy.MicroServices.Events;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.CommandListeners
@@ -26,12 +28,18 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.CommandListeners
         private readonly IEventPublisher _eventPublisher;
 
         /// <summary>
+        /// Logger
+        /// </summary>
+        private readonly ILogger<ReplayCommandListener> _logger;
+
+        /// <summary>
         /// Instantiate a replay command listener
         /// </summary>
-        public ReplayCommandListener(IAuditLogItemRepository repository, IEventPublisher eventPublisher)
+        public ReplayCommandListener(IAuditLogItemRepository repository, IEventPublisher eventPublisher, ILoggerFactory loggerFactory)
         {
             _repository = repository;
             _eventPublisher = eventPublisher;
+            _logger = loggerFactory.CreateLogger<ReplayCommandListener>();
         }
 
         /// <summary>
@@ -41,22 +49,34 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.CommandListeners
         public ReplayEventsResult Handle(ReplayEventsCommand command)
         {
             AuditLogItemCriteria criteria = (AuditLogItemCriteria) command;
-            IEnumerable<AuditLogItem> auditLogItems = _repository.FindBy(criteria);
+
+            _logger.LogInformation($"Received replaycommand with criteria: From: {criteria.FromTimeStamp}, " +
+                                   $"to: {criteria.ToTimeStamp}, " +
+                                   $"topics: {string.Join(',', criteria.Topics)} and " +
+                                   $"types: {string.Join(',', criteria.Types)}");
+
+            IEnumerable<AuditLogItem> auditLogItems = _repository.FindBy(criteria).ToList();
+
+            _logger.LogDebug($"Found {auditLogItems.Count()} in the database");
 
             Task.Run(() =>
             {
+                _logger.LogInformation($"Publishing start event with process id {command.ProcessId}");
                 _eventPublisher.Publish(new StartReplayEvent(command.ProcessId));
 
-                foreach (AuditLogItem logItem in auditLogItems)
+                Parallel.ForEach(auditLogItems, logItem =>
                 {
+                    _logger.LogTrace($"Publishing logitem with id {logItem.Id}");
                     _eventPublisher.Publish(logItem.TimeStamp,
-                        $"{ReplayTopicNames.ReplayEventTopicPrefix}{logItem.Topic}", logItem.Id, logItem.Type,
+                        $"{ReplayTopicNames.ReplayEventTopicPrefix}{logItem.Topic}", new Guid(logItem.Id), logItem.Type,
                         logItem.Data);
-                }
+                });
 
+                _logger.LogInformation($"Publishing end event with process id {command.ProcessId}");
                 _eventPublisher.Publish(new EndReplayEvent(command.ProcessId));
             });
 
+            _logger.LogDebug("Publishing ReplayEventsResult with auditlogitems count");
             return new ReplayEventsResult { AmountOfEvents = auditLogItems.Count() };
         }
     }

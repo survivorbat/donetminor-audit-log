@@ -9,7 +9,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Models
     [ExcludeFromCodeCoverage]
     public class AuditLogItem
     {
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         public string Topic { get; set; }
         public long TimeStamp { get; set; }
         public string Type { get; set; }

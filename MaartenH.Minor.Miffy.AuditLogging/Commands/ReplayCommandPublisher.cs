@@ -87,7 +87,6 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
             Host.EndListener = endListener;
 
             Logger.LogTrace("Starting replay");
-
             Host.StartReplay();
 
             Logger.LogDebug("Publishing replay command to auditlogger");

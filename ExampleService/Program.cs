@@ -27,7 +27,7 @@ namespace ExampleService
              */
             using var loggerFactory = LoggerFactory.Create(configure =>
             {
-                configure.AddConsole().SetMinimumLevel(LogLevel.Debug);
+                configure.AddConsole().SetMinimumLevel(LogLevel.Information);
             });
 
             /**
@@ -66,7 +66,7 @@ namespace ExampleService
              * Now let's start replaying, first create a replay command
              */
             Guid processId = Guid.NewGuid();
-            ReplayEventsCommand replayEventsCommand = new ReplayEventsCommand(DateTime.Now.AddDays(5).ToFileTimeUtc(), processId);
+            ReplayEventsCommand replayEventsCommand = new ReplayEventsCommand(DateTime.Now.ToFileTimeUtc(), processId);
 
             /**
              * Create the publishers

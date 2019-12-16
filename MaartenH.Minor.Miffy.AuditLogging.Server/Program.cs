@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy;
+using Minor.Miffy.MicroServices.Events;
 using Minor.Miffy.MicroServices.Host;
 using Minor.Miffy.RabbitMQBus;
 
@@ -48,6 +49,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
                     }, ServiceLifetime.Singleton);
 
                     services.AddTransient<IAuditLogItemRepository, AuditLogItemRepository>();
+                    services.AddTransient<IEventPublisher, EventPublisher>();
 
                     using var serviceScope = services.BuildServiceProvider().GetRequiredService<IServiceScopeFactory>().CreateScope();
                     var auditLogContext = serviceScope.ServiceProvider.GetService<AuditLogContext>();

@@ -56,7 +56,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
                 {
                     Data = data,
                     Topic = topic,
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid().ToString()
                 };
 
                 // Act
@@ -68,7 +68,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
 
             var resultData = controlContext.AuditLogItems.ToArray();
 
-            Assert.AreEqual(1, resultData.Count());
+            Assert.AreEqual(1, resultData.Length);
 
             var firstItem = resultData.First();
             Assert.AreEqual(data, firstItem.Data);
@@ -76,17 +76,46 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.Repositories
         }
 
         private readonly AuditLogItem[] _dummyData = {
-            new AuditLogItem {TimeStamp = 9, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid()},
-            new AuditLogItem {TimeStamp = 12, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid()},
-            new AuditLogItem {TimeStamp = 15, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid()},
-            new AuditLogItem {TimeStamp = 23, Data = "Test", Topic = "TestTopic", Id = Guid.NewGuid()},
+            new AuditLogItem {TimeStamp = 9, Data = "Test", Topic = "TestTopic", Type = "TestType", Id = Guid.NewGuid().ToString()},
+            new AuditLogItem {TimeStamp = 12, Data = "Test", Topic = "TopicTest", Type = "TypeTest", Id = Guid.NewGuid().ToString()},
+            new AuditLogItem {TimeStamp = 15, Data = "Test", Topic = "TestTopic", Type = "TestType", Id = Guid.NewGuid().ToString()},
+            new AuditLogItem {TimeStamp = 23, Data = "Test", Topic = "TopicTest2", Type = "TypeTest", Id = Guid.NewGuid().ToString()},
         };
+
+        [TestMethod]
+        [DataRow("TestTopic", 2)]
+        [DataRow("TopicTest", 1)]
+        [DataRow("TopicTest2", 1)]
+        [DataRow("TestTopic,TypeTest", 2)]
+        [DataRow("TestTopic,TopicTest2", 3)]
+        [DataRow("TestTopic,TopicTest2,TopicTest", 4)]
+        public void RetrievingItemsWithTypeWorks(string topics, int expectedAmount)
+        {
+            string[] topicNames = topics.Split(',');
+
+            // Arrange
+            InjectData(_dummyData);
+
+            using var context = new AuditLogContext(_options);
+            var repository = new AuditLogItemRepository(context);
+
+            var criteria = new AuditLogItemCriteria { Topics = topicNames, ToTimeStamp = 100 };
+
+            // Act
+            AuditLogItem[] results = repository.FindBy(criteria).ToArray();
+
+            // Assert
+            Assert.AreEqual(expectedAmount, results.Length);
+        }
 
         [TestMethod]
         [DataRow(10, 20, 2)]
         [DataRow(5, 12, 2)]
         [DataRow(10, 25, 3)]
         [DataRow(5, 40, 4)]
+        [DataRow(0, 8, 0)]
+        [DataRow(0, 1, 0)]
+        [DataRow(24, 26, 0)]
         public void RetrievingItemsFromSpecificTimePeriodWorks(long fromTimeStamp, long toTimeStamp, int expectedAmount)
         {
             // Arrange

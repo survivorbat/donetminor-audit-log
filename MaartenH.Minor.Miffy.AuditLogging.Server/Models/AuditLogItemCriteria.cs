@@ -11,17 +11,17 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Models
         /// <summary>
         /// Types of events
         /// </summary>
-        public IEnumerable<string> Types { get; set; }
+        public IEnumerable<string> Types { get; set; } = new List<string>();
 
         /// <summary>
         /// Event topics
         /// </summary>
-        public IEnumerable<string> Topics { get; set; }
+        public IEnumerable<string> Topics { get; set; } = new List<string>();
 
         /// <summary>
         /// Timestamp from when to look
         /// </summary>
-        public long? FromTimeStamp { get; set; }
+        public long FromTimeStamp { get; set; }
 
         /// <summary>
         /// Timestamp to which we should replay
