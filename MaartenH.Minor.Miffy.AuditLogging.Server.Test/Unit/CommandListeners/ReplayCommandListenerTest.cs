@@ -84,7 +84,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.CommandListeners
         public void FetchedLogItemsArePublished(int amount)
         {
             // Arrange
-            var repositoryMock = new Mock<IAuditLogItemRepository>();
+            var repositoryMock = new Mock<IAuditLogItemRepository>(MockBehavior.Strict);
             var eventPublisherMock = new Mock<IEventPublisher>();
 
             repositoryMock.Setup(e => e.FindBy(It.IsAny<AuditLogItemCriteria>()))
@@ -97,10 +97,10 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.CommandListeners
             // Act
             commandListener.Handle(command);
 
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
 
             // Assert
-            eventPublisherMock.Verify(e => e.Publish(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(amount));
+            eventPublisherMock.Verify(e => e.PublishAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(amount));
         }
     }
 }

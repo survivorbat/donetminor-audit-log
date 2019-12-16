@@ -64,13 +64,20 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.CommandListeners
                 _logger.LogInformation($"Publishing start event with process id {command.ProcessId}");
                 _eventPublisher.Publish(new StartReplayEvent(command.ProcessId));
 
-                Parallel.ForEach(auditLogItems, logItem =>
+                List<Task> tasks = new List<Task>();
+                foreach (AuditLogItem logItem in auditLogItems)
                 {
                     _logger.LogTrace($"Publishing logitem with id {logItem.Id}");
-                    _eventPublisher.Publish(logItem.TimeStamp,
+
+                    var task =_eventPublisher.PublishAsync(logItem.TimeStamp,
                         $"{ReplayTopicNames.ReplayEventTopicPrefix}{logItem.Topic}", new Guid(logItem.Id), logItem.Type,
                         logItem.Data);
-                });
+
+                    tasks.Add(task);
+                };
+
+                _logger.LogTrace("Waiting for all events to be published");
+                Task.WaitAll(tasks.ToArray());
 
                 _logger.LogInformation($"Publishing end event with process id {command.ProcessId}");
                 _eventPublisher.Publish(new EndReplayEvent(command.ProcessId));
