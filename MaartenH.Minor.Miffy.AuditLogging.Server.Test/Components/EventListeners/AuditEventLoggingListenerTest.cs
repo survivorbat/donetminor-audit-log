@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
@@ -91,7 +92,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Components.EventListener
             var firstItem = resultData.First();
             Assert.AreEqual(expectedData, firstItem.Data);
             Assert.AreEqual(evt.Id.ToString(), firstItem.Id);
-            Assert.AreEqual(evt.Timestamp, firstItem.TimeStamp);
+            Assert.AreEqual(new DateTime(evt.Timestamp).ToFileTimeUtc(), firstItem.TimeStamp);
         }
     }
 }

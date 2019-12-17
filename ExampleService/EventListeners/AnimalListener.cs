@@ -1,3 +1,4 @@
+using System;
 using ExampleService.Constants;
 using ExampleService.Events;
 using MaartenH.Minor.Miffy.AuditLogging.Events;
@@ -7,15 +8,17 @@ namespace ExampleService.EventListeners
 {
     public class AnimalListener
     {
-        [EventListener("App.Animals.AnimalAdded")]
+        [EventListener(QueueNames.AnimalAddedQueue)]
         [Topic(TopicNames.AnimalAddedTopic)]
         public void HandleAnimalAdded(AnimalAddedEvent evt)
         {
+            Console.WriteLine("Received a AnimalAddedEvent!");
         }
 
-        [ReplayEventListener("App.Animals.AnimalAdded")]
+        [ReplayEventListener(QueueNames.AnimalAddedQueue)]
         public void HandleAnimalAddedReplay(AnimalAddedEvent evt)
         {
+            Console.WriteLine("Received a replayed AnimalAddedEvent!");
         }
     }
 }

@@ -1,10 +1,14 @@
 using System;
+using System.Text;
 using System.Threading;
 using MaartenH.Minor.Miffy.AuditLogging.Constants;
 using MaartenH.Minor.Miffy.AuditLogging.Host;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Minor.Miffy;
 using Minor.Miffy.MicroServices.Commands;
+using Minor.Miffy.MicroServices.Events;
+using Newtonsoft.Json;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Commands
 {
@@ -67,7 +71,20 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
 
             MicroserviceReplayListener startListener = new MicroserviceReplayListener
             {
-                Callback = callbackResult => startResetEvent.Set(),
+                Callback = callbackResult =>
+                {
+                    Logger.LogDebug("Received replay start event, deserializing and checking process id...");
+                    string data = Encoding.Unicode.GetString(callbackResult.Body);
+                    DomainEvent domainEvent = JsonConvert.DeserializeObject<DomainEvent>(data);
+
+                    if (domainEvent.ProcessId.ToString() != command.ProcessId.ToString())
+                    {
+                        return;
+                    }
+
+                    Logger.LogInformation($"Start event received with process id {command.ProcessId}");
+                    startResetEvent.Set();
+                },
                 Queue = startQueue,
                 TopicExpressions = new [] { ReplayTopicNames.ReplayStartEventTopic }
             };
@@ -77,7 +94,20 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
 
             MicroserviceReplayListener endListener = new MicroserviceReplayListener
             {
-                Callback = callbackResult => endResetEvent.Set(),
+                Callback = callbackResult =>
+                {
+                    Logger.LogDebug("Received replay end event, deserializing and checking process id...");
+                    string data = Encoding.Unicode.GetString(callbackResult.Body);
+                    DomainEvent domainEvent = JsonConvert.DeserializeObject<DomainEvent>(data);
+
+                    if (domainEvent.ProcessId.ToString() != command.ProcessId.ToString())
+                    {
+                        return;
+                    }
+
+                    Logger.LogInformation($"End event received with process id {command.ProcessId}");
+                    endResetEvent.Set();
+                },
                 Queue = endQueue,
                 TopicExpressions = new [] { ReplayTopicNames.ReplayEndEventTopic  }
             };
@@ -92,13 +122,10 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Commands
             Logger.LogDebug("Publishing replay command to auditlogger");
             ReplayEventsResult result = CommandPublisher.PublishAsync<ReplayEventsResult>(command).Result;
 
-            Logger.LogInformation($"{result.AmountOfEvents} events will be replayed");
+            Logger.LogInformation($"{result.AmountOfEvents} event(s) will be replayed");
             Logger.LogDebug("Awaiting start event");
 
             startResetEvent.WaitOne();
-
-            Logger.LogInformation("Start event received, awaiting end event");
-
             endResetEvent.WaitOne();
 
             Logger.LogDebug("End event received, ending replay");

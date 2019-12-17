@@ -92,6 +92,13 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Host
 
             IsReplaying = false;
 
+            using IModel model = Context.Connection.CreateModel();
+
+            foreach (MicroserviceReplayListener microserviceReplayListener in ReplayListeners)
+            {
+                model.QueueDelete(microserviceReplayListener.Queue);
+            }
+
             ReplayMessageReceivers.ForEach(e => e.Dispose());
         }
     }

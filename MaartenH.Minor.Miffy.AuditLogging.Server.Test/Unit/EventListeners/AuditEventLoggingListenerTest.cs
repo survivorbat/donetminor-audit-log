@@ -30,8 +30,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Test.Unit.EventListeners
         }
 
         [TestMethod]
-        [DataRow("TestId",  "test.topic", 1020, "SimpleData")]
-        [DataRow("123456",  "test.topic", 203592, "Example Data")]
+        [DataRow("TestId",  "test.topic", 637121867145611215, "SimpleData")]
+        [DataRow("123456",  "test.topic", 637121867145611212, "Example Data")]
         public void HandlesSavesDeliveredMessageWithProperData(string id, string topic, long timestamp, string text)
         {
             // Arrange

@@ -43,8 +43,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.Models
                 Topics = command.Topics,
                 Types = command.Types,
                 FromTimeStamp = command.FromTimeStamp,
-                ToTimeStamp = command.ToTimeStamp,
-                AllowMetaEvents = command.AllowMetaEvents
+                ToTimeStamp = command.ToTimeStamp
             };
         }
     }

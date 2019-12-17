@@ -1,8 +1,10 @@
+using System;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Abstract;
 using MaartenH.Minor.Miffy.AuditLogging.Server.Models;
 using Microsoft.Extensions.Logging;
 using Minor.Miffy.MicroServices.Events;
 using Newtonsoft.Json;
+using RabbitMQ.Client;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners
 {
@@ -42,6 +44,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server.EventListeners
             try
             {
                 AuditLogItem item = JsonConvert.DeserializeObject<AuditLogItem>(evt);
+                item.TimeStamp = new DateTime(item.TimeStamp).ToFileTimeUtc();
                 item.Data = evt;
 
                 _repository.Save(item);

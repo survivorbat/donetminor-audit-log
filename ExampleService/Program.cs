@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using MaartenH.Minor.Miffy.AuditLogging.Commands;
@@ -31,12 +32,6 @@ namespace ExampleService
             });
 
             /**
-             * Make sure the libraries use the proper logger factories
-             */
-            MiffyLoggerFactory.LoggerFactory = loggerFactory;
-            RabbitMqLoggerFactory.LoggerFactory = loggerFactory;
-
-            /**
              * Set up a context using environment variables
              */
             using var context = new RabbitMqContextBuilder()
@@ -66,7 +61,10 @@ namespace ExampleService
              * Now let's start replaying, first create a replay command
              */
             Guid processId = Guid.NewGuid();
-            ReplayEventsCommand replayEventsCommand = new ReplayEventsCommand(DateTime.Now.ToFileTimeUtc(), processId);
+            ReplayEventsCommand replayEventsCommand = new ReplayEventsCommand(DateTime.Now.ToFileTimeUtc(), processId)
+            {
+                Types = new List<string> { "AnimalAddedEvent" }
+            };
 
             /**
              * Create the publishers

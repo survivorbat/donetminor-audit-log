@@ -12,6 +12,7 @@ using Minor.Miffy;
 using Minor.Miffy.MicroServices.Events;
 using Minor.Miffy.MicroServices.Host;
 using Minor.Miffy.RabbitMQBus;
+using RabbitMQ.Client;
 
 namespace MaartenH.Minor.Miffy.AuditLogging.Server
 {
@@ -23,7 +24,7 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
     {
         static void Main(string[] args)
         {
-            using var loggerFactory = LoggerFactory.Create(configure =>
+            using ILoggerFactory loggerFactory = LoggerFactory.Create(configure =>
             {
                 string logLevelString = Environment.GetEnvironmentVariable(EnvVarNames.LogLevel) ?? "Information";
                 LogLevel logLevel = Enum.Parse<LogLevel>(logLevelString);
@@ -33,11 +34,11 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Server
             MiffyLoggerFactory.LoggerFactory = loggerFactory;
             RabbitMqLoggerFactory.LoggerFactory = loggerFactory;
 
-            using var context = new RabbitMqContextBuilder()
+            using IBusContext<IConnection> context = new RabbitMqContextBuilder()
                 .ReadFromEnvironmentVariables()
                 .CreateContext();
 
-            using var host = new MicroserviceHostBuilder()
+            using IMicroserviceHost host = new MicroserviceHostBuilder()
                 .SetLoggerFactory(loggerFactory)
                 .WithBusContext(context)
                 .RegisterDependencies(services =>
