@@ -18,7 +18,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Host
         public void IsReplayingIsStandardFalse()
         {
             // Arrange
-            var connectionMock = new Mock<IBusContext<IConnection>>();
+            Mock<IBusContext<IConnection>> connectionMock = new Mock<IBusContext<IConnection>>();
+
             List<MicroserviceListener> listeners = new List<MicroserviceListener>();
             List<MicroserviceReplayListener> replayListeners = new List<MicroserviceReplayListener>();
             List<MicroserviceCommandListener> commandListeners = new List<MicroserviceCommandListener>();
@@ -34,7 +35,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Host
         public void StartReplayThrowsExceptionIfAlreadyReplaying()
         {
             // Arrange
-            var connectionMock = new Mock<IBusContext<IConnection>>();
+            Mock<IBusContext<IConnection>> connectionMock = new Mock<IBusContext<IConnection>>();
+
             List<MicroserviceListener> listeners = new List<MicroserviceListener>();
             List<MicroserviceReplayListener> replayListeners = new List<MicroserviceReplayListener>();
             List<MicroserviceCommandListener> commandListeners = new List<MicroserviceCommandListener>();
@@ -55,7 +57,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Host
         public void StartReplaySetsIsReplayingToTrue()
         {
             // Arrange
-            var connectionMock = new Mock<IBusContext<IConnection>>();
+            Mock<IBusContext<IConnection>> connectionMock = new Mock<IBusContext<IConnection>>();
+
             List<MicroserviceListener> listeners = new List<MicroserviceListener>();
             List<MicroserviceReplayListener> replayListeners = new List<MicroserviceReplayListener>();
             List<MicroserviceCommandListener> commandListeners = new List<MicroserviceCommandListener>();
@@ -73,7 +76,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Host
         public void StopReplaySetsIsReplayingToFalse()
         {
             // Arrange
-            var connectionMock = new Mock<IBusContext<IConnection>>();
+            Mock<IBusContext<IConnection>> connectionMock = new Mock<IBusContext<IConnection>>();
+
             List<MicroserviceListener> listeners = new List<MicroserviceListener>();
             List<MicroserviceReplayListener> replayListeners = new List<MicroserviceReplayListener>();
             List<MicroserviceCommandListener> commandListeners = new List<MicroserviceCommandListener>();
@@ -93,7 +97,8 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Host
         public void StopReplayThrowsExceptionIfNotReplaying()
         {
             // Arrange
-            var connectionMock = new Mock<IBusContext<IConnection>>();
+            Mock<IBusContext<IConnection>> connectionMock = new Mock<IBusContext<IConnection>>();
+
             List<MicroserviceListener> listeners = new List<MicroserviceListener>();
             List<MicroserviceReplayListener> replayListeners = new List<MicroserviceReplayListener>();
             List<MicroserviceCommandListener> commandListeners = new List<MicroserviceCommandListener>();
@@ -106,6 +111,68 @@ namespace MaartenH.Minor.Miffy.AuditLogging.Test.Unit.Host
             // Assert
             BusConfigurationException exception = Assert.ThrowsException<BusConfigurationException>(Act);
             Assert.AreEqual("Attempted to stop replaying the MicroserviceHost, but it is not replaying.", exception.Message);
+        }
+
+        [TestMethod]
+        public void StartReplayCallsStartReceivingMessagesOnAllListeners()
+        {
+            // Arrange
+            Mock<IBusContext<IConnection>> connectionMock = new Mock<IBusContext<IConnection>>();
+            Mock<IMessageReceiver> messageReceiverMock = new Mock<IMessageReceiver>();
+
+            List<MicroserviceListener> listeners = new List<MicroserviceListener>();
+            List<MicroserviceReplayListener> replayListeners = new List<MicroserviceReplayListener>
+            {
+                new MicroserviceReplayListener
+                {
+                    Queue = "queue",
+                    Callback = message => { },
+                    TopicExpressions = new string[0]
+                }
+            };
+            List<MicroserviceCommandListener> commandListeners = new List<MicroserviceCommandListener>();
+
+            connectionMock.Setup(e => e.CreateMessageReceiver(It.IsAny<string>(), It.IsAny<string[]>()))
+                .Returns(messageReceiverMock.Object);
+
+            IMicroserviceReplayHost replayHost = new MicroserviceReplayHost(connectionMock.Object, listeners, replayListeners, commandListeners, new NullLogger<MicroserviceHost>());
+
+            // Act
+            replayHost.StartReplay();
+
+            // Assert
+            messageReceiverMock.Verify(e => e.StartReceivingMessages());
+        }
+
+        [TestMethod]
+        public void StartReplayCallsStartHandlingMessagesOnAllListeners()
+        {
+            // Arrange
+            Mock<IBusContext<IConnection>> connectionMock = new Mock<IBusContext<IConnection>>();
+            Mock<IMessageReceiver> messageReceiverMock = new Mock<IMessageReceiver>();
+
+            List<MicroserviceListener> listeners = new List<MicroserviceListener>();
+            List<MicroserviceReplayListener> replayListeners = new List<MicroserviceReplayListener>
+            {
+                new MicroserviceReplayListener
+                {
+                    Queue = "queue",
+                    Callback = message => { },
+                    TopicExpressions = new string[0]
+                }
+            };
+            List<MicroserviceCommandListener> commandListeners = new List<MicroserviceCommandListener>();
+
+            connectionMock.Setup(e => e.CreateMessageReceiver(It.IsAny<string>(), It.IsAny<string[]>()))
+                .Returns(messageReceiverMock.Object);
+
+            IMicroserviceReplayHost replayHost = new MicroserviceReplayHost(connectionMock.Object, listeners, replayListeners, commandListeners, new NullLogger<MicroserviceHost>());
+
+            // Act
+            replayHost.StartReplay();
+
+            // Assert
+            messageReceiverMock.Verify(e => e.StartHandlingMessages(It.IsAny<EventMessageReceivedCallback>()));
         }
     }
 }

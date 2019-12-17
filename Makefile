@@ -32,6 +32,7 @@ example.logs: ## See the logs of the example service
 up: ## Start the containers in docker-compose
 	make build
 	docker-compose -f docker-compose.yaml -p auditlogger up -d
+	make example.logs
 
 down: ## Stop the containers
 	docker-compose -f docker-compose.yaml -p auditlogger down

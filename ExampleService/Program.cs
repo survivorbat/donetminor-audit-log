@@ -99,7 +99,6 @@ namespace ExampleService
 
                 DomainEvent domainEvent = ExampleData.GenerateRandomEvent();
                 eventPublisher.Publish(domainEvent);
-                Thread.Sleep(1000);
             }
         }
     }
