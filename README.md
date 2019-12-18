@@ -1,4 +1,6 @@
-# Miffy RabbitMQ AuditLogging
+# Miffy RabbitMQ AuditLogging [CANCELED]
+
+**This project has been canceled due to an existing auditlogger being provided in class.**
 
 ![GitHub](https://img.shields.io/github/license/survivorbat/miffy-auditlogger)
 
